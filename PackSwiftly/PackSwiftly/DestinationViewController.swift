@@ -8,13 +8,11 @@
 
 import UIKit
 import CoreData
-import CoreLocation
 
-class DestinationViewController: UIViewController, UITableViewDataSource {
+class DestinationViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     
-    let geoCoder = CLGeocoder()
     var dataController: DataController!
     var destinations: [Destination]?
     
@@ -23,39 +21,26 @@ class DestinationViewController: UIViewController, UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.dataSource = self
+        tableView.delegate = self
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         destinations = dataController.fetchAllDestinations()
+        tableView.reloadData()
     }
     
     // MARK: - Actions
     
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
-        let alertView = UIAlertController(title: nil, message: "New Destination", preferredStyle: .alert)
-        var textField = UITextField()
-        alertView.addTextField { (field) in
-            textField = field
-            textField.placeholder = "Where are you traveling to?"
+        performSegue(withIdentifier: "newDestination", sender: nil)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "newDestination" {
+            guard let newDestinationViewController = segue.destination as? NewDestinationViewController else { return }
+            newDestinationViewController.dataController = dataController
         }
-        let action = UIAlertAction(title: "Add", style: .default) { (action) in
-            guard let newDestinationName = textField.text, textField.text != "" else {
-                self.dismiss(animated: true, completion: nil)
-                return
-            }
-            self.geoCoder.geocodeAddressString(newDestinationName) { (placemarks, error) in
-                guard let placemarks = placemarks, let location = placemarks.first?.location else {
-                    self.dismiss(animated: true, completion: nil)
-                    return
-                }
-                let newDestination = Destination(context: self.dataController.viewContext)
-                newDestination.name = newDestinationName
-                newDestination.latitude = location.coordinate.latitude
-                newDestination.longitude = location.coordinate.longitude
-                try? self.dataController.viewContext.save()
-                self.destinations = self.dataController.fetchAllDestinations()
-                self.tableView.reloadData()
-            }
-        }
-        alertView.addAction(action)
-        present(alertView, animated: true, completion: nil)
     }
     
     // MARK: - TableViewDataSource Methods
@@ -68,6 +53,16 @@ class DestinationViewController: UIViewController, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "destinationCell")
         cell?.textLabel?.text = destinations![indexPath.row].name!
         cell?.detailTextLabel?.text = "Coordinates: \(destinations![indexPath.row].latitude) \(destinations![indexPath.row].longitude)"
+        if let imageData = destinations![indexPath.row].image {
+            cell?.imageView?.image = UIImage(data: imageData)
+            cell?.imageView?.contentMode = .scaleAspectFill
+        }
         return cell!
+    }
+    
+    // MARK: - TableViewDelegate Methods
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 100
     }
 }
