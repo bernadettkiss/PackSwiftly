@@ -20,6 +20,7 @@
 		CF9546D7213591F600943C13 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF9546D6213591F600943C13 /* DataController.swift */; };
 		CF9546D92135B2A000943C13 /* FlickrClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF9546D82135B2A000943C13 /* FlickrClient.swift */; };
 		CF9546DB2135B2DA00943C13 /* NewDestinationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF9546DA2135B2DA00943C13 /* NewDestinationViewController.swift */; };
+		CFC88AFC2142F42E000BE44F /* DestinationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFC88AFB2142F42E000BE44F /* DestinationTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		CF9546D6213591F600943C13 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		CF9546D82135B2A000943C13 /* FlickrClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrClient.swift; sourceTree = "<group>"; };
 		CF9546DA2135B2DA00943C13 /* NewDestinationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewDestinationViewController.swift; sourceTree = "<group>"; };
+		CFC88AFB2142F42E000BE44F /* DestinationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 		CF1AE1E1213718760089FAA4 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				CFC88AFB2142F42E000BE44F /* DestinationTableViewCell.swift */,
 				CF1AE1DE213709D70089FAA4 /* PhotoCollectionViewCell.swift */,
 			);
 			name = View;
@@ -193,6 +196,7 @@
 				CF1AE1DD2135C3180089FAA4 /* FlickrClientConstants.swift in Sources */,
 				CF9546C42134D89900943C13 /* DestinationViewController.swift in Sources */,
 				CF9546C22134D89900943C13 /* AppDelegate.swift in Sources */,
+				CFC88AFC2142F42E000BE44F /* DestinationTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

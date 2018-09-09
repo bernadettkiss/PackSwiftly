@@ -9,12 +9,12 @@
 import UIKit
 import CoreData
 
-class DestinationViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class DestinationViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     
     var dataController: DataController!
-    var destinations: [Destination]?
+    var fetchedResultsController: NSFetchedResultsController<Destination>!
     
     // MARK: - View Life Cycle
     
@@ -22,12 +22,21 @@ class DestinationViewController: UIViewController, UITableViewDataSource, UITabl
         super.viewDidLoad()
         tableView.dataSource = self
         tableView.delegate = self
+        setUpFetchedResultsController()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        destinations = dataController.fetchAllDestinations()
-        tableView.reloadData()
+        do {
+            try fetchedResultsController.performFetch()
+            tableView.reloadData()
+        } catch {
+            fatalError("The fetch could not be performed: \(error.localizedDescription)")
+        }
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
     }
     
     // MARK: - Actions
@@ -36,6 +45,8 @@ class DestinationViewController: UIViewController, UITableViewDataSource, UITabl
         performSegue(withIdentifier: "newDestination", sender: nil)
     }
     
+    // MARK: - Methods
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "newDestination" {
             guard let newDestinationViewController = segue.destination as? NewDestinationViewController else { return }
@@ -43,26 +54,63 @@ class DestinationViewController: UIViewController, UITableViewDataSource, UITabl
         }
     }
     
+    private func setUpFetchedResultsController() {
+        let fetchRequest: NSFetchRequest<Destination> = Destination.fetchRequest()
+        let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
+        fetchRequest.sortDescriptors = [sortDescriptor]
+        
+        fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: dataController.viewContext, sectionNameKeyPath: nil, cacheName: nil)
+        fetchedResultsController.delegate = self
+        
+        do {
+            try fetchedResultsController.performFetch()
+        } catch {
+            fatalError("The fetch could not be performed: \(error.localizedDescription)")
+        }
+    }
+    
+    private func removeDestination(at indexPath: IndexPath) {
+        let destinationToDelete = fetchedResultsController.object(at: indexPath)
+        dataController.viewContext.delete(destinationToDelete)
+        try? dataController.viewContext.save()
+    }
+    
     // MARK: - TableViewDataSource Methods
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return destinations?.count ?? 1
+        return fetchedResultsController.sections?[section].numberOfObjects ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "destinationCell")
-        cell?.textLabel?.text = destinations![indexPath.row].name!
-        cell?.detailTextLabel?.text = "Coordinates: \(destinations![indexPath.row].latitude) \(destinations![indexPath.row].longitude)"
-        if let imageData = destinations![indexPath.row].image {
-            cell?.imageView?.image = UIImage(data: imageData)
-            cell?.imageView?.contentMode = .scaleAspectFill
+        let cell = tableView.dequeueReusableCell(withIdentifier: "destinationCell") as! DestinationTableViewCell
+        
+        let destination = fetchedResultsController.object(at: indexPath)
+        if let destinationName = destination.name {
+            if let imageData = destination.image {
+                let image = UIImage(data: imageData)
+                cell.update(with: image, and: destinationName)
+            } else {
+                cell.contentView.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
+                cell.update(with: nil, and: destinationName)
+            }
         }
-        return cell!
+        return cell
     }
     
     // MARK: - TableViewDelegate Methods
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
+        return 120
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { (action, view, handler) in
+            handler(true)
+            self.removeDestination(at: indexPath)
+        }
+        deleteAction.backgroundColor = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
+        let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
+        configuration.performsFirstActionWithFullSwipe = false
+        return configuration
     }
 }

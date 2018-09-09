@@ -30,6 +30,7 @@ class NewDestinationViewController: UIViewController, UICollectionViewDataSource
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        imageData = nil
         destinationTextField.placeholder = "Where are you traveling to?"
         collectionView.dataSource = self
         collectionView.delegate = self
