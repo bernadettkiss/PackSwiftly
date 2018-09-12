@@ -41,6 +41,10 @@ class DestinationViewController: UIViewController, UITableViewDataSource, UITabl
     
     // MARK: - Actions
     
+    @IBAction func addNewTripButtonPressed(_ sender: UIBarButtonItem) {
+        performSegue(withIdentifier: "newTrip", sender: nil)
+    }
+    
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
         performSegue(withIdentifier: "newDestination", sender: nil)
     }
