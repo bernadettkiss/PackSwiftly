@@ -8,8 +8,8 @@
 
 import UIKit
 
-protocol DatePickerDelegate: class {
-    func didChangeDate(date: Date, indexPath: IndexPath)
+protocol DatePickerTableViewCellDelegate: class {
+    func didChange(date: Date, atIndexPath indexPath: IndexPath)
 }
 
 class DatePickerTableViewCell: UITableViewCell {
@@ -17,25 +17,19 @@ class DatePickerTableViewCell: UITableViewCell {
     @IBOutlet weak var datePicker: UIDatePicker!
     
     var indexPath: IndexPath!
-    weak var delegate: DatePickerDelegate?
+    weak var delegate: DatePickerTableViewCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
         datePicker.datePickerMode = .date
-        datePicker.addTarget(self, action: #selector(dateDidChange), for: .valueChanged)
     }
     
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
+    @IBAction func datePickerValueChanged(_ sender: UIDatePicker) {
+        delegate?.didChange(date: sender.date, atIndexPath: IndexPath(row: indexPath.row - 1, section: indexPath.section))
     }
     
-    func update(date: Date, at indexPath: IndexPath) {
+    func update(date: Date, atIndexPath indexPath: IndexPath) {
         datePicker.setDate(date, animated: true)
         self.indexPath = indexPath
-    }
-    
-    @objc func dateDidChange(_ sender: UIDatePicker) {
-        let indexPathForDisplayDate = IndexPath(row: indexPath.row - 1, section: indexPath.section)
-        delegate?.didChangeDate(date: sender.date, indexPath: indexPathForDisplayDate)
     }
 }

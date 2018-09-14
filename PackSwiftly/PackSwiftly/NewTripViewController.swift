@@ -8,14 +8,29 @@
 
 import UIKit
 
-class NewTripViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, DatePickerDelegate {
+enum Section: Int {
+    case destination = 0,
+    dates,
+    total
+}
+
+struct DateField {
+    let title: String
+    var value: Date
+}
+
+class NewTripViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, DatePickerTableViewCellDelegate, TextFieldTableViewCellDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     
-    var destinationName: String = ""
-    var startDate = Date()
-    var endDate = Date()
+    var destinationName: String?
+    var dateFields = [DateField(title: "Start Date", value: Date()),
+                      DateField(title: "End Date", value: Date())]
+    
     var datePickerIndexPath: IndexPath?
+    var datePickerIsDisplayed: Bool {
+        return datePickerIndexPath != nil
+    }
     
     // MARK: - View Life Cycle
     
@@ -32,40 +47,44 @@ class NewTripViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     @IBAction func saveButtonPressed(_ sender: UIBarButtonItem) {
+        print("Destination: \(destinationName), Start: \(dateFields[0].value), End: \(dateFields[1].value)")
     }
     
     // MARK: - TableViewDataSource Methods
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return Section.total.rawValue
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if datePickerIndexPath != nil {
-            return 4
+        if section == Section.destination.rawValue {
+            return 1
         } else {
-            return 3
+            return datePickerIsDisplayed ? dateFields.count + 1 : dateFields.count
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if datePickerIndexPath == indexPath {
-            let datePickerCell = tableView.dequeueReusableCell(withIdentifier: "datePickerCell", for: indexPath) as! DatePickerTableViewCell
-            datePickerCell.delegate = self
-            if indexPath.row == 2 {
-                 datePickerCell.update(date: startDate, at: indexPath)
-            } else {
-                 datePickerCell.update(date: endDate, at: indexPath)
-            }
-            return datePickerCell
+        if indexPath.section == Section.destination.rawValue {
+            let textFieldTableViewCell = tableView.dequeueReusableCell(withIdentifier: "textFieldTableViewCell", for: indexPath) as! TextFieldTableViewCell
+            textFieldTableViewCell.delegate = self
+            return textFieldTableViewCell
         }
-        if indexPath.row == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "textInputCell", for: indexPath) as? TextInputTableViewCell
-            return cell!
-        } else if indexPath.row == 1 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "dateCell", for: indexPath) as? DateTableViewCell
-            cell?.update(text: "Start Date", date: startDate)
-            return cell!
+        if indexPath.section == Section.dates.rawValue {
+            if datePickerIndexPath == indexPath {
+                let datePickerTableViewCell = tableView.dequeueReusableCell(withIdentifier: "datePickerTableViewCell", for: indexPath) as! DatePickerTableViewCell
+                datePickerTableViewCell.delegate = self
+                let date = dateFields[indexPath.row - 1].value
+                datePickerTableViewCell.update(date: date, atIndexPath: indexPath)
+                return datePickerTableViewCell
+            } else {
+                let dateTableViewCell = tableView.dequeueReusableCell(withIdentifier: "dateTableViewCell", for: indexPath) as! DateTableViewCell
+                let dateField = dateFields[indexPath.row]
+                dateTableViewCell.update(text: dateField.title, date: dateField.value)
+                return dateTableViewCell
+            }
         } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "dateCell", for: indexPath) as? DateTableViewCell
-            cell?.update(text: "End Date", date: endDate)
-            return cell!
+            return UITableViewCell()
         }
     }
     
@@ -73,7 +92,6 @@ class NewTripViewController: UIViewController, UITableViewDataSource, UITableVie
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.beginUpdates()
-        
         if let datePickerIndexPath = datePickerIndexPath, datePickerIndexPath.row - 1 == indexPath.row {
             tableView.deleteRows(at: [datePickerIndexPath], with: .fade)
             self.datePickerIndexPath = nil
@@ -96,13 +114,16 @@ class NewTripViewController: UIViewController, UITableViewDataSource, UITableVie
         }
     }
     
-    func didChangeDate(date: Date, indexPath: IndexPath) {
-        let cell = tableView.cellForRow(at: indexPath) as? DateTableViewCell
-        cell?.update(text: nil, date: date)
-        if indexPath.row == 1 {
-            startDate = date
-        } else {
-            endDate = date
-        }
+    // MARK: - DatePickerTableViewCellDelegate Methods
+    
+    func didChange(date: Date, atIndexPath indexPath: IndexPath) {
+        dateFields[indexPath.row].value = date
+        tableView.reloadRows(at: [indexPath], with: .none)
+    }
+    
+    // MARK: - TextFieldTableViewCellDelegate Methods
+    
+    func didChange(text: String?) {
+        self.destinationName = text
     }
 }

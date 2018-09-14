@@ -17,10 +17,6 @@ class DateTableViewCell: UITableViewCell {
         super.awakeFromNib()
     }
     
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-    }
-    
     func update(text: String?, date: Date) {
         if let text = text {
             label.text = text

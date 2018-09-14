@@ -226,17 +226,17 @@
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="textInputCell" id="JQX-e4-9Uv" customClass="TextInputTableViewCell" customModule="PackSwiftly" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="textFieldTableViewCell" id="JQX-e4-9Uv" customClass="TextFieldTableViewCell" customModule="PackSwiftly" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="JQX-e4-9Uv" id="7hP-Js-lJy">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ha2-VE-nSw">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ha2-VE-nSw">
+                                                    <rect key="frame" x="20" y="0.0" width="335" height="43.5"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="44" id="QBk-2D-lEM"/>
+                                                        <constraint firstAttribute="height" constant="44" id="72B-xk-FFV"/>
                                                     </constraints>
                                                     <nil key="textColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -244,9 +244,9 @@
                                                 </textField>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="Ha2-VE-nSw" firstAttribute="leading" secondItem="7hP-Js-lJy" secondAttribute="leading" id="4Ou-dT-lIF"/>
+                                                <constraint firstItem="Ha2-VE-nSw" firstAttribute="leading" secondItem="7hP-Js-lJy" secondAttribute="leading" constant="20" id="4Ou-dT-lIF"/>
                                                 <constraint firstAttribute="bottom" secondItem="Ha2-VE-nSw" secondAttribute="bottom" id="N1m-zn-g5C"/>
-                                                <constraint firstAttribute="trailing" secondItem="Ha2-VE-nSw" secondAttribute="trailing" id="m1i-VO-2xx"/>
+                                                <constraint firstAttribute="trailing" secondItem="Ha2-VE-nSw" secondAttribute="trailing" constant="20" id="m1i-VO-2xx"/>
                                                 <constraint firstItem="Ha2-VE-nSw" firstAttribute="top" secondItem="7hP-Js-lJy" secondAttribute="top" id="mq0-Tu-3zy"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -254,7 +254,7 @@
                                             <outlet property="textField" destination="Ha2-VE-nSw" id="HkT-Rc-HcO"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="dateCell" id="e5P-jK-O00" customClass="DateTableViewCell" customModule="PackSwiftly" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="dateTableViewCell" id="e5P-jK-O00" customClass="DateTableViewCell" customModule="PackSwiftly" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="72" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="e5P-jK-O00" id="onJ-Hm-aIq">
@@ -288,18 +288,21 @@
                                             <outlet property="label" destination="tzw-ik-Szq" id="Odz-Lw-3Mt"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="datePickerCell" rowHeight="216" id="Vt8-Xj-uAA" customClass="DatePickerTableViewCell" customModule="PackSwiftly" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="116" width="375" height="216"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="datePickerTableViewCell" id="Vt8-Xj-uAA" customClass="DatePickerTableViewCell" customModule="PackSwiftly" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="116" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Vt8-Xj-uAA" id="beQ-gp-kyZ">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="215.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="2Mg-fB-XdS">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="216"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                                     <date key="date" timeIntervalSinceReferenceDate="558306003.16012299">
                                                         <!--2018-09-10 21:00:03 +0000-->
                                                     </date>
+                                                    <connections>
+                                                        <action selector="datePickerValueChanged:" destination="Vt8-Xj-uAA" eventType="valueChanged" id="VaP-X5-a5P"/>
+                                                    </connections>
                                                 </datePicker>
                                             </subviews>
                                             <constraints>
