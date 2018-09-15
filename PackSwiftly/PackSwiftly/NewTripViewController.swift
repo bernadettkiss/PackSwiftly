@@ -11,6 +11,7 @@ import UIKit
 enum Section: Int {
     case destination = 0,
     dates,
+    photos,
     total
 }
 
@@ -59,8 +60,11 @@ class NewTripViewController: UIViewController, UITableViewDataSource, UITableVie
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == Section.destination.rawValue {
             return 1
-        } else {
+        }
+        if section == Section.dates.rawValue {
             return datePickerIsDisplayed ? dateFields.count + 1 : dateFields.count
+        } else {
+            return 1
         }
     }
     
@@ -84,11 +88,21 @@ class NewTripViewController: UIViewController, UITableViewDataSource, UITableVie
                 return dateTableViewCell
             }
         } else {
-            return UITableViewCell()
+            let photosTableViewCell = tableView.dequeueReusableCell(withIdentifier: "photosTableViewCell", for: indexPath) as! PhotosTableViewCell
+            photosTableViewCell.getImages(latitude: 40.7128, longitude: 74.0060, text: "New York")
+            return photosTableViewCell
         }
     }
     
     // MARK: - TableViewDelegate Methods
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.section == Section.photos.rawValue {
+            return 600
+        } else {
+            return 44
+        }
+    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.beginUpdates()

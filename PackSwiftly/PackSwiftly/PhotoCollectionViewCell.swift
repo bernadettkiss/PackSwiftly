@@ -30,7 +30,7 @@ class PhotoCollectionViewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        confugireCell()
+        confugire()
     }
     
     func update(with image: UIImage) {
@@ -38,7 +38,7 @@ class PhotoCollectionViewCell: UICollectionViewCell {
         imageView.contentMode = .scaleAspectFill
     }
     
-    private func confugireCell() {
+    private func confugire() {
         contentView.backgroundColor = .white
         contentView.layer.cornerRadius = 10
         contentView.layer.masksToBounds = true
