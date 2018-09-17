@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import CoreData
+import CoreLocation
 
 enum Section: Int {
     case destination = 0,
@@ -20,11 +22,15 @@ struct DateField {
     var value: Date
 }
 
-class NewTripViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, DatePickerTableViewCellDelegate, TextFieldTableViewCellDelegate {
+class NewTripViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, DatePickerTableViewCellDelegate, TextFieldTableViewCellDelegate, PhotosTableViewCellDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     
     var destinationName: String?
+    var latitude: CLLocationDegrees?
+    var longitude: CLLocationDegrees?
+    var imageData: Data? = nil
+    
     var dateFields = [DateField(title: "Start Date", value: Date()),
                       DateField(title: "End Date", value: Date())]
     
@@ -32,6 +38,9 @@ class NewTripViewController: UIViewController, UITableViewDataSource, UITableVie
     var datePickerIsDisplayed: Bool {
         return datePickerIndexPath != nil
     }
+    
+    let geoCoder = CLGeocoder()
+    var dataController: DataController!
     
     // MARK: - View Life Cycle
     
@@ -41,6 +50,11 @@ class NewTripViewController: UIViewController, UITableViewDataSource, UITableVie
         tableView.delegate = self
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        view.endEditing(true)
+    }
+    
     // MARK: - Actions
     
     @IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
@@ -48,7 +62,46 @@ class NewTripViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     @IBAction func saveButtonPressed(_ sender: UIBarButtonItem) {
-        print("Destination: \(destinationName), Start: \(dateFields[0].value), End: \(dateFields[1].value)")
+        save()
+    }
+    
+    // MARK: - Methods
+    
+    private func insertDatePicker(at indexPath: IndexPath) -> IndexPath {
+        if let datePickerIndexPath = datePickerIndexPath, datePickerIndexPath.row < indexPath.row {
+            return indexPath
+        } else {
+            return IndexPath(row: indexPath.row + 1, section: indexPath.section)
+        }
+    }
+    
+    private func geocode(destination: String, completionHandler: @escaping (Bool) -> Void) {
+        self.geoCoder.geocodeAddressString(destination) { (placemarks, error) in
+            guard let placemarks = placemarks, let location = placemarks.first?.location else {
+                completionHandler(false)
+                return
+            }
+            self.destinationName = destination
+            self.latitude = location.coordinate.latitude
+            self.longitude = location.coordinate.longitude
+            completionHandler(true)
+        }
+    }
+    
+    private func save() {
+        if let destinationName = destinationName, let latitude = latitude, let longitude = longitude {
+            let trip = Trip(context: dataController.viewContext)
+            trip.startDate = dateFields[0].value
+            trip.endDate = dateFields[1].value
+            let destination = Destination(context: dataController.viewContext)
+            destination.name = destinationName
+            destination.latitude = latitude
+            destination.longitude = longitude
+            destination.image = imageData
+            destination.trip = trip
+            try? dataController.viewContext.save()
+            dismiss(animated: true, completion: nil)
+        }
     }
     
     // MARK: - TableViewDataSource Methods
@@ -58,9 +111,6 @@ class NewTripViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == Section.destination.rawValue {
-            return 1
-        }
         if section == Section.dates.rawValue {
             return datePickerIsDisplayed ? dateFields.count + 1 : dateFields.count
         } else {
@@ -87,44 +137,38 @@ class NewTripViewController: UIViewController, UITableViewDataSource, UITableVie
                 dateTableViewCell.update(text: dateField.title, date: dateField.value)
                 return dateTableViewCell
             }
-        } else {
-            let photosTableViewCell = tableView.dequeueReusableCell(withIdentifier: "photosTableViewCell", for: indexPath) as! PhotosTableViewCell
-            photosTableViewCell.getImages(latitude: 40.7128, longitude: 74.0060, text: "New York")
-            return photosTableViewCell
         }
+        if indexPath.section == Section.photos.rawValue {
+            if destinationName != nil {
+                let photosTableViewCell = tableView.dequeueReusableCell(withIdentifier: "photosTableViewCell", for: indexPath) as! PhotosTableViewCell
+                photosTableViewCell.delegate = self
+                photosTableViewCell.getPhotos(latitude: latitude!, longitude: longitude!, text: destinationName!)
+                return photosTableViewCell
+            }
+            return UITableViewCell()
+        }
+        return UITableViewCell()
     }
     
     // MARK: - TableViewDelegate Methods
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.section == Section.photos.rawValue {
-            return 600
-        } else {
-            return 44
-        }
-    }
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.beginUpdates()
-        if let datePickerIndexPath = datePickerIndexPath, datePickerIndexPath.row - 1 == indexPath.row {
-            tableView.deleteRows(at: [datePickerIndexPath], with: .fade)
-            self.datePickerIndexPath = nil
-        } else {
-            if let datePickerIndexPath = datePickerIndexPath {
+        view.endEditing(true)
+        tableView.deselectRow(at: indexPath, animated: true)
+        if indexPath.section == Section.dates.rawValue {
+            tableView.beginUpdates()
+            if let datePickerIndexPath = datePickerIndexPath, datePickerIndexPath.row - 1 == indexPath.row {
                 tableView.deleteRows(at: [datePickerIndexPath], with: .fade)
+                self.datePickerIndexPath = nil
+            } else {
+                if let datePickerIndexPath = datePickerIndexPath {
+                    tableView.deleteRows(at: [datePickerIndexPath], with: .fade)
+                }
+                datePickerIndexPath = insertDatePicker(at: indexPath)
+                tableView.insertRows(at: [datePickerIndexPath!], with: .fade)
+                tableView.deselectRow(at: indexPath, animated: true)
             }
-            datePickerIndexPath = insertDatePicker(at: indexPath)
-            tableView.insertRows(at: [datePickerIndexPath!], with: .fade)
-            tableView.deselectRow(at: indexPath, animated: true)
-        }
-        tableView.endUpdates()
-    }
-    
-    private func insertDatePicker(at indexPath: IndexPath) -> IndexPath {
-        if let datePickerIndexPath = datePickerIndexPath, datePickerIndexPath.row < indexPath.row {
-            return indexPath
-        } else {
-            return IndexPath(row: indexPath.row + 1, section: indexPath.section)
+            tableView.endUpdates()
         }
     }
     
@@ -138,6 +182,19 @@ class NewTripViewController: UIViewController, UITableViewDataSource, UITableVie
     // MARK: - TextFieldTableViewCellDelegate Methods
     
     func didChange(text: String?) {
-        self.destinationName = text
+        guard let destination = text, text != "" else {
+            return
+        }
+        geocode(destination: destination) { (success) in
+            if success {
+                self.tableView.reloadSections([Section.photos.rawValue], with: .fade)
+            }
+        }
+    }
+    
+    // MARK: - PhotosTableViewCellDelegate Methods
+    
+    func didSelect(image: Data) {
+        self.imageData = image
     }
 }

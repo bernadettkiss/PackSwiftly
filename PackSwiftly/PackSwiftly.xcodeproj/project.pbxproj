@@ -17,15 +17,14 @@
 		CF6276672147125F00F77CAD /* DatePickerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF6276662147125F00F77CAD /* DatePickerTableViewCell.swift */; };
 		CF8A9F8E214C318C00475EEE /* PhotosTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8A9F8D214C318C00475EEE /* PhotosTableViewCell.swift */; };
 		CF9546C22134D89900943C13 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF9546C12134D89900943C13 /* AppDelegate.swift */; };
-		CF9546C42134D89900943C13 /* DestinationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF9546C32134D89900943C13 /* DestinationViewController.swift */; };
+		CF9546C42134D89900943C13 /* TripViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF9546C32134D89900943C13 /* TripViewController.swift */; };
 		CF9546C72134D89900943C13 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CF9546C52134D89900943C13 /* Main.storyboard */; };
 		CF9546CA2134D89900943C13 /* PackSwiftly.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CF9546C82134D89900943C13 /* PackSwiftly.xcdatamodeld */; };
 		CF9546CC2134D89C00943C13 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CF9546CB2134D89C00943C13 /* Assets.xcassets */; };
 		CF9546CF2134D89C00943C13 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CF9546CD2134D89C00943C13 /* LaunchScreen.storyboard */; };
 		CF9546D7213591F600943C13 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF9546D6213591F600943C13 /* DataController.swift */; };
 		CF9546D92135B2A000943C13 /* FlickrClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF9546D82135B2A000943C13 /* FlickrClient.swift */; };
-		CF9546DB2135B2DA00943C13 /* NewDestinationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF9546DA2135B2DA00943C13 /* NewDestinationViewController.swift */; };
-		CFC88AFC2142F42E000BE44F /* DestinationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFC88AFB2142F42E000BE44F /* DestinationTableViewCell.swift */; };
+		CFC88AFC2142F42E000BE44F /* TripTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFC88AFB2142F42E000BE44F /* TripTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,7 +39,7 @@
 		CF8A9F8D214C318C00475EEE /* PhotosTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosTableViewCell.swift; sourceTree = "<group>"; };
 		CF9546BE2134D89900943C13 /* PackSwiftly.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PackSwiftly.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF9546C12134D89900943C13 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		CF9546C32134D89900943C13 /* DestinationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationViewController.swift; sourceTree = "<group>"; };
+		CF9546C32134D89900943C13 /* TripViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripViewController.swift; sourceTree = "<group>"; };
 		CF9546C62134D89900943C13 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CF9546C92134D89900943C13 /* PackSwiftly.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PackSwiftly.xcdatamodel; sourceTree = "<group>"; };
 		CF9546CB2134D89C00943C13 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -48,8 +47,7 @@
 		CF9546D02134D89C00943C13 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CF9546D6213591F600943C13 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		CF9546D82135B2A000943C13 /* FlickrClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrClient.swift; sourceTree = "<group>"; };
-		CF9546DA2135B2DA00943C13 /* NewDestinationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewDestinationViewController.swift; sourceTree = "<group>"; };
-		CFC88AFB2142F42E000BE44F /* DestinationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationTableViewCell.swift; sourceTree = "<group>"; };
+		CFC88AFB2142F42E000BE44F /* TripTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,8 +64,7 @@
 		CF1AE1E0213718660089FAA4 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				CF9546C32134D89900943C13 /* DestinationViewController.swift */,
-				CF9546DA2135B2DA00943C13 /* NewDestinationViewController.swift */,
+				CF9546C32134D89900943C13 /* TripViewController.swift */,
 				CF6276602146F33600F77CAD /* NewTripViewController.swift */,
 			);
 			name = Controller;
@@ -76,12 +73,12 @@
 		CF1AE1E1213718760089FAA4 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				CFC88AFB2142F42E000BE44F /* DestinationTableViewCell.swift */,
-				CF1AE1DE213709D70089FAA4 /* PhotoCollectionViewCell.swift */,
+				CFC88AFB2142F42E000BE44F /* TripTableViewCell.swift */,
 				CF6276622146F88200F77CAD /* TextFieldTableViewCell.swift */,
 				CF6276642147062900F77CAD /* DateTableViewCell.swift */,
 				CF6276662147125F00F77CAD /* DatePickerTableViewCell.swift */,
 				CF8A9F8D214C318C00475EEE /* PhotosTableViewCell.swift */,
+				CF1AE1DE213709D70089FAA4 /* PhotoCollectionViewCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -201,7 +198,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CF9546DB2135B2DA00943C13 /* NewDestinationViewController.swift in Sources */,
 				CF9546CA2134D89900943C13 /* PackSwiftly.xcdatamodeld in Sources */,
 				CF6276612146F33600F77CAD /* NewTripViewController.swift in Sources */,
 				CF9546D92135B2A000943C13 /* FlickrClient.swift in Sources */,
@@ -212,9 +208,9 @@
 				CF6276652147062900F77CAD /* DateTableViewCell.swift in Sources */,
 				CF1AE1DF213709D70089FAA4 /* PhotoCollectionViewCell.swift in Sources */,
 				CF1AE1DD2135C3180089FAA4 /* FlickrClientConstants.swift in Sources */,
-				CF9546C42134D89900943C13 /* DestinationViewController.swift in Sources */,
+				CF9546C42134D89900943C13 /* TripViewController.swift in Sources */,
 				CF9546C22134D89900943C13 /* AppDelegate.swift in Sources */,
-				CFC88AFC2142F42E000BE44F /* DestinationTableViewCell.swift in Sources */,
+				CFC88AFC2142F42E000BE44F /* TripTableViewCell.swift in Sources */,
 				CF6276632146F88200F77CAD /* TextFieldTableViewCell.swift in Sources */,
 				CF6276672147125F00F77CAD /* DatePickerTableViewCell.swift in Sources */,
 			);

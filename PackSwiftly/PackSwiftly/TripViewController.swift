@@ -1,5 +1,5 @@
 //
-//  DestinationViewController.swift
+//  TripViewController.swift
 //  PackSwiftly
 //
 //  Created by Bernadett Kiss on 8/27/18.
@@ -9,12 +9,12 @@
 import UIKit
 import CoreData
 
-class DestinationViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate {
+class TripViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     
     var dataController: DataController!
-    var fetchedResultsController: NSFetchedResultsController<Destination>!
+    var fetchedResultsController: NSFetchedResultsController<Trip>!
     
     // MARK: - View Life Cycle
     
@@ -37,30 +37,27 @@ class DestinationViewController: UIViewController, UITableViewDataSource, UITabl
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
+        fetchedResultsController = nil
     }
     
     // MARK: - Actions
     
-    @IBAction func addNewTripButtonPressed(_ sender: UIBarButtonItem) {
-        performSegue(withIdentifier: "newTrip", sender: nil)
-    }
-    
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
-        performSegue(withIdentifier: "newDestination", sender: nil)
+        performSegue(withIdentifier: "newTrip", sender: nil)
     }
     
     // MARK: - Methods
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "newDestination" {
-            guard let newDestinationViewController = segue.destination as? NewDestinationViewController else { return }
-            newDestinationViewController.dataController = dataController
+        if segue.identifier == "newTrip" {
+            guard let newTripViewController = segue.destination as? NewTripViewController else { return }
+            newTripViewController.dataController = dataController
         }
     }
     
     private func setUpFetchedResultsController() {
-        let fetchRequest: NSFetchRequest<Destination> = Destination.fetchRequest()
-        let sortDescriptor = NSSortDescriptor(key: "name", ascending: true)
+        let fetchRequest: NSFetchRequest<Trip> = Trip.fetchRequest()
+        let sortDescriptor = NSSortDescriptor(key: "startDate", ascending: true)
         fetchRequest.sortDescriptors = [sortDescriptor]
         
         fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: dataController.viewContext, sectionNameKeyPath: nil, cacheName: nil)
@@ -73,9 +70,9 @@ class DestinationViewController: UIViewController, UITableViewDataSource, UITabl
         }
     }
     
-    private func removeDestination(at indexPath: IndexPath) {
-        let destinationToDelete = fetchedResultsController.object(at: indexPath)
-        dataController.viewContext.delete(destinationToDelete)
+    private func removeTrip(at indexPath: IndexPath) {
+        let tripToDelete = fetchedResultsController.object(at: indexPath)
+        dataController.viewContext.delete(tripToDelete)
         try? dataController.viewContext.save()
     }
     
@@ -86,16 +83,15 @@ class DestinationViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "destinationCell") as! DestinationTableViewCell
-        
-        let destination = fetchedResultsController.object(at: indexPath)
-        if let destinationName = destination.name {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "tripTableViewCell") as! TripTableViewCell
+        let trip = fetchedResultsController.object(at: indexPath)
+        if let destination = trip.destination {
             if let imageData = destination.image {
                 let image = UIImage(data: imageData)
-                cell.update(with: image, and: destinationName)
+                cell.update(withImage: image, text: destination.name!, startDate: trip.startDate!, endDate: trip.endDate!)
             } else {
                 cell.contentView.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
-                cell.update(with: nil, and: destinationName)
+                cell.update(withImage: nil, text: destination.name!, startDate: trip.startDate!, endDate: trip.endDate!)
             }
         }
         return cell
@@ -104,13 +100,13 @@ class DestinationViewController: UIViewController, UITableViewDataSource, UITabl
     // MARK: - TableViewDelegate Methods
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 120
+        return 150
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { (action, view, handler) in
             handler(true)
-            self.removeDestination(at: indexPath)
+            self.removeTrip(at: indexPath)
         }
         deleteAction.backgroundColor = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
         let configuration = UISwipeActionsConfiguration(actions: [deleteAction])

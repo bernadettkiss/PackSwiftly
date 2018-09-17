@@ -14,6 +14,7 @@ protocol TextFieldTableViewCellDelegate: class {
 
 class TextFieldTableViewCell: UITableViewCell, UITextFieldDelegate {
     
+    @IBOutlet weak var label: UILabel!
     @IBOutlet weak var textField: UITextField!
     
     weak var delegate: TextFieldTableViewCellDelegate?
@@ -23,7 +24,7 @@ class TextFieldTableViewCell: UITableViewCell, UITextFieldDelegate {
         textField.delegate = self
         configure()
     }
-        
+    
     func textFieldDidEndEditing(_ textField: UITextField) {
         delegate?.didChange(text: textField.text)
     }
@@ -34,6 +35,7 @@ class TextFieldTableViewCell: UITableViewCell, UITextFieldDelegate {
     }
     
     func configure() {
+        label.text =  "Destination"
         textField.placeholder = "Where are you traveling to?"
     }
 }

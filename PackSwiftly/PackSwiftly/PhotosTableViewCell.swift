@@ -8,12 +8,17 @@
 
 import UIKit
 
+protocol PhotosTableViewCellDelegate: class {
+    func didSelect(image: Data)
+}
+
 class PhotosTableViewCell: UITableViewCell, UICollectionViewDataSource, UICollectionViewDelegate {
     
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
     
     var photos = [Photo]()
+    weak var delegate: PhotosTableViewCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -22,11 +27,7 @@ class PhotosTableViewCell: UITableViewCell, UICollectionViewDataSource, UICollec
         configureFlowLayout()
     }
     
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-    }
-    
-    func getImages(latitude: Double, longitude: Double, text: String) {
+    func getPhotos(latitude: Double, longitude: Double, text: String) {
         FlickrClient.shared.getPhotos(latitude: latitude, longitude: longitude, text: text) { (result) in
             if case let .success(parsedPhotos) = result {
                 self.photos = parsedPhotos
@@ -76,5 +77,8 @@ class PhotosTableViewCell: UITableViewCell, UICollectionViewDataSource, UICollec
     // MARK: - CollectionViewDelegate Methods
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if let imageData = photos[indexPath.item].imageData {
+            delegate?.didSelect(image: imageData)
+        }
     }
 }
