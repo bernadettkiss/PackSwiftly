@@ -1,5 +1,5 @@
 //
-//  TripViewController.swift
+//  TripsViewController.swift
 //  PackSwiftly
 //
 //  Created by Bernadett Kiss on 8/27/18.
@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class TripViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate {
+class TripsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, NSFetchedResultsControllerDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -27,12 +27,7 @@ class TripViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        do {
-            try fetchedResultsController.performFetch()
-            tableView.reloadData()
-        } catch {
-            fatalError("The fetch could not be performed: \(error.localizedDescription)")
-        }
+        setUpFetchedResultsController()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -101,6 +96,11 @@ class TripViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 150
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let trip = fetchedResultsController.object(at: indexPath)
+        performSegue(withIdentifier: "packList", sender: trip)
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
