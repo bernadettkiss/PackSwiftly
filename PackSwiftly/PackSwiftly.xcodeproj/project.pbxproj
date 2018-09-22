@@ -26,6 +26,9 @@
 		CF9546D92135B2A000943C13 /* FlickrClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF9546D82135B2A000943C13 /* FlickrClient.swift */; };
 		CFC88AFC2142F42E000BE44F /* TripTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFC88AFB2142F42E000BE44F /* TripTableViewCell.swift */; };
 		CFEF96852151900600E7F637 /* PackListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFEF96842151900600E7F637 /* PackListViewController.swift */; };
+		CFEF96872153065800E7F637 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFEF96862153065800E7F637 /* Constants.swift */; };
+		CFEF968921530A7900E7F637 /* ToDoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFEF968821530A7900E7F637 /* ToDoListViewController.swift */; };
+		CFEF968B2155585A00E7F637 /* TripTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFEF968A2155585A00E7F637 /* TripTabBarController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +53,9 @@
 		CF9546D82135B2A000943C13 /* FlickrClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrClient.swift; sourceTree = "<group>"; };
 		CFC88AFB2142F42E000BE44F /* TripTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripTableViewCell.swift; sourceTree = "<group>"; };
 		CFEF96842151900600E7F637 /* PackListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackListViewController.swift; sourceTree = "<group>"; };
+		CFEF96862153065800E7F637 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		CFEF968821530A7900E7F637 /* ToDoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListViewController.swift; sourceTree = "<group>"; };
+		CFEF968A2155585A00E7F637 /* TripTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripTabBarController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +74,8 @@
 			children = (
 				CF9546C32134D89900943C13 /* TripsViewController.swift */,
 				CF6276602146F33600F77CAD /* NewTripViewController.swift */,
+				CFEF968A2155585A00E7F637 /* TripTabBarController.swift */,
+				CFEF968821530A7900E7F637 /* ToDoListViewController.swift */,
 				CFEF96842151900600E7F637 /* PackListViewController.swift */,
 			);
 			name = Controller;
@@ -119,6 +127,7 @@
 			children = (
 				CF9546C12134D89900943C13 /* AppDelegate.swift */,
 				CF1AE1DA2135C2C30089FAA4 /* NetworkManager.swift */,
+				CFEF96862153065800E7F637 /* Constants.swift */,
 				CF1AE1E22137187F0089FAA4 /* Model */,
 				CF1AE1E1213718760089FAA4 /* View */,
 				CF1AE1E0213718660089FAA4 /* Controller */,
@@ -202,7 +211,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				CF9546CA2134D89900943C13 /* PackSwiftly.xcdatamodeld in Sources */,
+				CFEF96872153065800E7F637 /* Constants.swift in Sources */,
 				CFEF96852151900600E7F637 /* PackListViewController.swift in Sources */,
+				CFEF968B2155585A00E7F637 /* TripTabBarController.swift in Sources */,
 				CF6276612146F33600F77CAD /* NewTripViewController.swift in Sources */,
 				CF9546D92135B2A000943C13 /* FlickrClient.swift in Sources */,
 				CF8A9F8E214C318C00475EEE /* PhotosTableViewCell.swift in Sources */,
@@ -216,6 +227,7 @@
 				CF9546C22134D89900943C13 /* AppDelegate.swift in Sources */,
 				CFC88AFC2142F42E000BE44F /* TripTableViewCell.swift in Sources */,
 				CF6276632146F88200F77CAD /* TextFieldTableViewCell.swift in Sources */,
+				CFEF968921530A7900E7F637 /* ToDoListViewController.swift in Sources */,
 				CF6276672147125F00F77CAD /* DatePickerTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

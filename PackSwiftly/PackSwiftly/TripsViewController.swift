@@ -22,6 +22,7 @@ class TripsViewController: UIViewController, UITableViewDataSource, UITableViewD
         super.viewDidLoad()
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.keyboardDismissMode = .onDrag
         setUpFetchedResultsController()
     }
     
@@ -38,15 +39,20 @@ class TripsViewController: UIViewController, UITableViewDataSource, UITableViewD
     // MARK: - Actions
     
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
-        performSegue(withIdentifier: "newTrip", sender: nil)
+        performSegue(withIdentifier: SegueIdentifier.toNewTrip.rawValue, sender: nil)
     }
     
     // MARK: - Methods
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "newTrip" {
+        if segue.identifier == SegueIdentifier.toNewTrip.rawValue {
             guard let newTripViewController = segue.destination as? NewTripViewController else { return }
             newTripViewController.dataController = dataController
+        }
+        if segue.identifier == SegueIdentifier.toTripDetail.rawValue {
+            guard let tripTabBarController = segue.destination as? TripTabBarController else { return }
+            tripTabBarController.selectedTrip = sender as! Trip
+            tripTabBarController.dataController = dataController
         }
     }
     
@@ -100,7 +106,7 @@ class TripsViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let trip = fetchedResultsController.object(at: indexPath)
-        performSegue(withIdentifier: "packList", sender: trip)
+        performSegue(withIdentifier: SegueIdentifier.toTripDetail.rawValue, sender: trip)
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
