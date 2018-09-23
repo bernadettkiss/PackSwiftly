@@ -17,6 +17,7 @@ class ToDoListViewController: UIViewController, UITableViewDataSource, UITextFie
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.adjustToKeyboard()
         tableView.dataSource = self
         textField.delegate = self
         let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))

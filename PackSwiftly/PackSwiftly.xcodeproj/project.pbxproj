@@ -25,6 +25,7 @@
 		CF9546D7213591F600943C13 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF9546D6213591F600943C13 /* DataController.swift */; };
 		CF9546D92135B2A000943C13 /* FlickrClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF9546D82135B2A000943C13 /* FlickrClient.swift */; };
 		CFC88AFC2142F42E000BE44F /* TripTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFC88AFB2142F42E000BE44F /* TripTableViewCell.swift */; };
+		CFCB3D102156AE9E00BC8E9E /* UIView+AdjustToKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFCB3D0F2156AE9E00BC8E9E /* UIView+AdjustToKeyboard.swift */; };
 		CFEF96852151900600E7F637 /* PackListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFEF96842151900600E7F637 /* PackListViewController.swift */; };
 		CFEF96872153065800E7F637 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFEF96862153065800E7F637 /* Constants.swift */; };
 		CFEF968921530A7900E7F637 /* ToDoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFEF968821530A7900E7F637 /* ToDoListViewController.swift */; };
@@ -52,6 +53,7 @@
 		CF9546D6213591F600943C13 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		CF9546D82135B2A000943C13 /* FlickrClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrClient.swift; sourceTree = "<group>"; };
 		CFC88AFB2142F42E000BE44F /* TripTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripTableViewCell.swift; sourceTree = "<group>"; };
+		CFCB3D0F2156AE9E00BC8E9E /* UIView+AdjustToKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+AdjustToKeyboard.swift"; sourceTree = "<group>"; };
 		CFEF96842151900600E7F637 /* PackListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackListViewController.swift; sourceTree = "<group>"; };
 		CFEF96862153065800E7F637 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		CFEF968821530A7900E7F637 /* ToDoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListViewController.swift; sourceTree = "<group>"; };
@@ -90,6 +92,7 @@
 				CF6276662147125F00F77CAD /* DatePickerTableViewCell.swift */,
 				CF8A9F8D214C318C00475EEE /* PhotosTableViewCell.swift */,
 				CF1AE1DE213709D70089FAA4 /* PhotoCollectionViewCell.swift */,
+				CFCB3D0F2156AE9E00BC8E9E /* UIView+AdjustToKeyboard.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -217,6 +220,7 @@
 				CF6276612146F33600F77CAD /* NewTripViewController.swift in Sources */,
 				CF9546D92135B2A000943C13 /* FlickrClient.swift in Sources */,
 				CF8A9F8E214C318C00475EEE /* PhotosTableViewCell.swift in Sources */,
+				CFCB3D102156AE9E00BC8E9E /* UIView+AdjustToKeyboard.swift in Sources */,
 				CF1AE1DB2135C2C30089FAA4 /* NetworkManager.swift in Sources */,
 				CF1AE1E4213718C00089FAA4 /* ApiKeys.swift in Sources */,
 				CF9546D7213591F600943C13 /* DataController.swift in Sources */,
