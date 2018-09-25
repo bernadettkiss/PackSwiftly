@@ -50,9 +50,9 @@ class TripsViewController: UIViewController, UITableViewDataSource, UITableViewD
             newTripViewController.dataController = dataController
         }
         if segue.identifier == SegueIdentifier.toTripDetail.rawValue {
-            guard let tripTabBarController = segue.destination as? TripTabBarController else { return }
-            tripTabBarController.selectedTrip = sender as! Trip
-            tripTabBarController.dataController = dataController
+            guard let tripDetailViewController = segue.destination as? TripDetailViewController else { return }
+            tripDetailViewController.selectedTrip = sender as! Trip
+            tripDetailViewController.dataController = dataController
         }
     }
     
