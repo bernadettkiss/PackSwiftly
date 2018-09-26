@@ -48,6 +48,7 @@ class NewTripViewController: UIViewController, UITableViewDataSource, UITableVie
         super.viewDidLoad()
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.keyboardDismissMode = .onDrag
     }
     
     override func viewWillDisappear(_ animated: Bool) {

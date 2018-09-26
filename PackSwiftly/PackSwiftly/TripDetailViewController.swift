@@ -18,7 +18,8 @@ class TripDetailViewController: UIViewController, UITableViewDataSource, UITextF
     
     @IBOutlet weak var segmentedControl: UnderlinedSegmentedControl!
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var textField: UITextField!
+    @IBOutlet weak var textField: TransparentTextField!
+    @IBOutlet weak var textInputView: UIView!
     
     var selectedTrip: Trip! {
         didSet {
@@ -34,7 +35,8 @@ class TripDetailViewController: UIViewController, UITableViewDataSource, UITextF
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        textField.adjustToKeyboard()
+        textInputView.adjustToKeyboard()
+        textInputView.isHidden = true
         tableView.dataSource = self
         textField.delegate = self
         let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))
@@ -49,9 +51,15 @@ class TripDetailViewController: UIViewController, UITableViewDataSource, UITextF
         super.viewWillDisappear(animated)
     }
     
-    // SegmentedControl
+    // MARK: - Actions
     
     @IBAction func valueChanged(_ sender: UISegmentedControl) {
+        switch segmentedControl.selectedSegmentIndex {
+        case 0:
+            textInputView.isHidden = true
+        default:
+            textInputView.isHidden = false
+        }
         tableView.reloadData()
     }
     
@@ -88,7 +96,7 @@ class TripDetailViewController: UIViewController, UITableViewDataSource, UITextF
         if let item = textField.text {
             switch segmentedControl.selectedSegmentIndex {
             case 0:
-                info.append(item)
+                return true
             case 1:
                 toDoList.append(item)
             default:

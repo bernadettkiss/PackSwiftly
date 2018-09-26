@@ -22,7 +22,6 @@ class TripsViewController: UIViewController, UITableViewDataSource, UITableViewD
         super.viewDidLoad()
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.keyboardDismissMode = .onDrag
         setUpFetchedResultsController()
     }
     

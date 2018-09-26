@@ -16,6 +16,7 @@
 		CF6276652147062900F77CAD /* DateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF6276642147062900F77CAD /* DateTableViewCell.swift */; };
 		CF6276672147125F00F77CAD /* DatePickerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF6276662147125F00F77CAD /* DatePickerTableViewCell.swift */; };
 		CF7FF9C32159592600B51F16 /* UnderlinedSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7FF9C22159592600B51F16 /* UnderlinedSegmentedControl.swift */; };
+		CF7FF9C5215AC50400B51F16 /* TransparentTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7FF9C4215AC50400B51F16 /* TransparentTextField.swift */; };
 		CF8A9F8E214C318C00475EEE /* PhotosTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF8A9F8D214C318C00475EEE /* PhotosTableViewCell.swift */; };
 		CF9546C22134D89900943C13 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF9546C12134D89900943C13 /* AppDelegate.swift */; };
 		CF9546C42134D89900943C13 /* TripsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF9546C32134D89900943C13 /* TripsViewController.swift */; };
@@ -41,6 +42,7 @@
 		CF6276642147062900F77CAD /* DateTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTableViewCell.swift; sourceTree = "<group>"; };
 		CF6276662147125F00F77CAD /* DatePickerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerTableViewCell.swift; sourceTree = "<group>"; };
 		CF7FF9C22159592600B51F16 /* UnderlinedSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnderlinedSegmentedControl.swift; sourceTree = "<group>"; };
+		CF7FF9C4215AC50400B51F16 /* TransparentTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransparentTextField.swift; sourceTree = "<group>"; };
 		CF8A9F8D214C318C00475EEE /* PhotosTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosTableViewCell.swift; sourceTree = "<group>"; };
 		CF9546BE2134D89900943C13 /* PackSwiftly.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PackSwiftly.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF9546C12134D89900943C13 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -90,6 +92,7 @@
 				CF1AE1DE213709D70089FAA4 /* PhotoCollectionViewCell.swift */,
 				CFCB3D0F2156AE9E00BC8E9E /* UIView+AdjustToKeyboard.swift */,
 				CF7FF9C22159592600B51F16 /* UnderlinedSegmentedControl.swift */,
+				CF7FF9C4215AC50400B51F16 /* TransparentTextField.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -222,6 +225,7 @@
 				CF9546D7213591F600943C13 /* DataController.swift in Sources */,
 				CF6276652147062900F77CAD /* DateTableViewCell.swift in Sources */,
 				CF1AE1DF213709D70089FAA4 /* PhotoCollectionViewCell.swift in Sources */,
+				CF7FF9C5215AC50400B51F16 /* TransparentTextField.swift in Sources */,
 				CF1AE1DD2135C3180089FAA4 /* FlickrClientConstants.swift in Sources */,
 				CF9546C42134D89900943C13 /* TripsViewController.swift in Sources */,
 				CF9546C22134D89900943C13 /* AppDelegate.swift in Sources */,
