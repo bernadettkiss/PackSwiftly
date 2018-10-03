@@ -22,7 +22,6 @@ class TextFieldTableViewCell: UITableViewCell, UITextFieldDelegate {
     override func awakeFromNib() {
         super.awakeFromNib()
         textField.delegate = self
-        configure()
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
@@ -34,8 +33,11 @@ class TextFieldTableViewCell: UITableViewCell, UITextFieldDelegate {
         return true
     }
     
-    func configure() {
+    func configure(text: String?) {
         label.text =  "Destination"
+        if let text = text {
+            textField.text = text
+        }
         textField.placeholder = "Where are you traveling to?"
     }
 }

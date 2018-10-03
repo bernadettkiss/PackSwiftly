@@ -30,12 +30,9 @@ class DataController {
         }
     }
     
-    func fetchAllDestinations() -> [Destination]? {
-        let fetchRequest: NSFetchRequest<Destination> = Destination.fetchRequest()
-        if let destinations = try? viewContext.fetch(fetchRequest) {
-            return destinations
-        } else {
-            return nil
+    func saveViewContext() {
+        if viewContext.hasChanges {
+            try? viewContext.save()
         }
     }
 }

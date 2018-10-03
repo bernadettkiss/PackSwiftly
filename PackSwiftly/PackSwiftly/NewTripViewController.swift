@@ -10,6 +10,11 @@ import UIKit
 import CoreData
 import CoreLocation
 
+enum TripChangeType {
+    case create
+    case update
+}
+
 enum Section: Int {
     case destination = 0,
     dates,
@@ -24,8 +29,16 @@ struct DateField {
 
 class NewTripViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, DatePickerTableViewCellDelegate, TextFieldTableViewCellDelegate, PhotosTableViewCellDelegate {
     
+    @IBOutlet weak var tripNavigationItem: UINavigationItem!
     @IBOutlet weak var tableView: UITableView!
     
+    var tripChangeType: TripChangeType = .create
+    
+    var trip: Trip? {
+        didSet {
+            tripChangeType = trip == nil ? .create : .update
+        }
+    }
     var destinationName: String?
     var latitude: CLLocationDegrees?
     var longitude: CLLocationDegrees?
@@ -46,9 +59,30 @@ class NewTripViewController: UIViewController, UITableViewDataSource, UITableVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupView()
         tableView.dataSource = self
         tableView.delegate = self
         tableView.keyboardDismissMode = .onDrag
+    }
+    
+    func setupView() {
+        switch tripChangeType {
+        case .create:
+            self.navigationItem.title = "New Trip"
+        case .update:
+            self.navigationItem.title = "Edit Trip"
+            if let trip = trip {
+                dateFields[0].value = trip.startDate!
+                dateFields[1].value = trip.endDate!
+                if let destination = trip.destination {
+                    destinationName = destination.name
+                    latitude = destination.latitude
+                    longitude = destination.longitude
+                    imageData = destination.image
+                }
+            }
+            
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -63,7 +97,13 @@ class NewTripViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     @IBAction func saveButtonPressed(_ sender: UIBarButtonItem) {
-        save()
+        if trip == nil {
+            save()
+        } else {
+            update()
+        }
+        dataController.saveViewContext()
+        dismiss(animated: true, completion: nil)
     }
     
     // MARK: - Methods
@@ -100,8 +140,21 @@ class NewTripViewController: UIViewController, UITableViewDataSource, UITableVie
             destination.longitude = longitude
             destination.image = imageData
             destination.trip = trip
-            try? dataController.viewContext.save()
-            dismiss(animated: true, completion: nil)
+        }
+    }
+    
+    private func update() {
+        if let destinationName = destinationName, let latitude = latitude, let longitude = longitude {
+            if let trip = trip {
+                trip.startDate = dateFields[0].value
+                trip.endDate = dateFields[1].value
+                if let destination = trip.destination {
+                    destination.name = destinationName
+                    destination.latitude = latitude
+                    destination.longitude = longitude
+                    destination.image = imageData
+                }
+            }
         }
     }
     
@@ -123,6 +176,7 @@ class NewTripViewController: UIViewController, UITableViewDataSource, UITableVie
         if indexPath.section == Section.destination.rawValue {
             let textFieldTableViewCell = tableView.dequeueReusableCell(withIdentifier: "textFieldTableViewCell", for: indexPath) as! TextFieldTableViewCell
             textFieldTableViewCell.delegate = self
+            textFieldTableViewCell.configure(text: destinationName)
             return textFieldTableViewCell
         }
         if indexPath.section == Section.dates.rawValue {
@@ -146,7 +200,9 @@ class NewTripViewController: UIViewController, UITableViewDataSource, UITableVie
                 photosTableViewCell.getPhotos(latitude: latitude!, longitude: longitude!, text: destinationName!)
                 return photosTableViewCell
             }
-            return UITableViewCell()
+            let cell = UITableViewCell()
+            cell.textLabel?.text = "Enter destination to select image"
+            return cell
         }
         return UITableViewCell()
     }

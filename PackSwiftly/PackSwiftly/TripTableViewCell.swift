@@ -15,6 +15,8 @@ class TripTableViewCell: UITableViewCell {
     @IBOutlet weak var destinationNameLabel: UILabel!
     @IBOutlet weak var tripDatesLabel: UILabel!
     
+    static let reuseIdentifier = "tripTableViewCell"
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         if selected {

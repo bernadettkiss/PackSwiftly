@@ -19,7 +19,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="gz1-EJ-NVd">
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You don't have any trips yet" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QfD-jd-3Qs">
+                                <rect key="frame" x="82.5" y="323" width="210.5" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="gz1-EJ-NVd">
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -85,6 +91,10 @@
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="QfD-jd-3Qs" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="d5z-d7-eOY"/>
+                            <constraint firstItem="QfD-jd-3Qs" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="iEQ-7f-ZLW"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="4ib-tf-A9I">
@@ -95,6 +105,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="messageLabel" destination="QfD-jd-3Qs" id="Em8-z3-i1e"/>
                         <outlet property="tableView" destination="gz1-EJ-NVd" id="3QJ-Wx-xOE"/>
                         <segue destination="vF6-mA-cAO" kind="presentation" identifier="toNewTrip" id="zlB-P6-bNt"/>
                         <segue destination="dgB-ek-hH3" kind="show" identifier="toTripDetail" id="PG9-pl-VuL"/>
@@ -304,6 +315,7 @@
                         <viewLayoutGuide key="safeArea" id="xgD-KN-p7N"/>
                     </view>
                     <connections>
+                        <outlet property="navigationItem" destination="lg8-Qu-dcC" id="1GG-WP-G6L"/>
                         <outlet property="tableView" destination="Sfl-j1-5Mn" id="yA3-zT-z28"/>
                     </connections>
                 </viewController>

@@ -7,13 +7,20 @@
         <attribute name="name" attributeType="String" syncable="YES"/>
         <relationship name="trip" maxCount="1" deletionRule="Nullify" destinationEntity="Trip" inverseName="destination" inverseEntity="Trip" syncable="YES"/>
     </entity>
+    <entity name="Item" representedClassName="Item" syncable="YES" codeGenerationType="class">
+        <attribute name="done" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <relationship name="trip" maxCount="1" deletionRule="Nullify" destinationEntity="Trip" inverseName="items" inverseEntity="Trip" syncable="YES"/>
+    </entity>
     <entity name="Trip" representedClassName="Trip" syncable="YES" codeGenerationType="class">
         <attribute name="endDate" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="startDate" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <relationship name="destination" maxCount="1" deletionRule="Cascade" destinationEntity="Destination" inverseName="trip" inverseEntity="Destination" syncable="YES"/>
+        <relationship name="items" toMany="YES" deletionRule="Cascade" destinationEntity="Item" inverseName="trip" inverseEntity="Item" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Destination" positionX="-63" positionY="-18" width="128" height="120"/>
-        <element name="Trip" positionX="-63" positionY="9" width="128" height="90"/>
+        <element name="Destination" positionX="-297" positionY="-102" width="128" height="120"/>
+        <element name="Trip" positionX="-504" positionY="-33" width="128" height="103"/>
+        <element name="Item" positionX="-299" positionY="36" width="128" height="90"/>
     </elements>
 </model>

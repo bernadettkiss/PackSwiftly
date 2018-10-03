@@ -17,7 +17,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
-        dataController.load()
         let navigationController = window?.rootViewController as! UINavigationController
         let tripsViewController = navigationController.topViewController as! TripsViewController
         tripsViewController.dataController = dataController
@@ -26,18 +25,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func applicationDidEnterBackground(_ application: UIApplication) {
-        saveViewContext()
+        dataController.saveViewContext()
     }
     
     func applicationWillTerminate(_ application: UIApplication) {
-        saveViewContext()
-    }
-    
-    // MARK: - Core Data Saving Support
-    
-    func saveViewContext() {
-        if dataController.viewContext.hasChanges {
-            try? dataController.viewContext.save()
-        }
+        dataController.saveViewContext()
     }
 }
