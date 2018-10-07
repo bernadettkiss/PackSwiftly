@@ -98,7 +98,7 @@ class NewTripViewController: UIViewController, UITableViewDataSource, UITableVie
     
     @IBAction func saveButtonPressed(_ sender: UIBarButtonItem) {
         if trip == nil {
-            save()
+            create()
         } else {
             update()
         }
@@ -129,7 +129,7 @@ class NewTripViewController: UIViewController, UITableViewDataSource, UITableVie
         }
     }
     
-    private func save() {
+    private func create() {
         if let destinationName = destinationName, let latitude = latitude, let longitude = longitude {
             let trip = Trip(context: dataController.viewContext)
             trip.startDate = dateFields[0].value

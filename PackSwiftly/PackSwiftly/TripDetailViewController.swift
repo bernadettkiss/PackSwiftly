@@ -9,17 +9,27 @@
 import UIKit
 
 enum Segment: Int {
-    case info = 0,
-    toDoList,
-    packList
+    case toDoList = 0,
+    // packList,
+    info
+    
+    func title() -> String {
+        switch self {
+        case .toDoList:
+            return "ToDo List"
+            //        case .packList:
+        //            return "Pack List"
+        case .info:
+            return "Info"
+        }
+    }
 }
 
-class TripDetailViewController: UIViewController, UITableViewDataSource, UITextFieldDelegate {
+class TripDetailViewController: UIViewController {
     
     @IBOutlet weak var segmentedControl: UnderlinedSegmentedControl!
-    @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var textField: TransparentTextField!
-    @IBOutlet weak var textInputView: UIView!
+    @IBOutlet weak var firstContainerView: UIView!
+    @IBOutlet weak var secondContainerView: UIView!
     
     var selectedTrip: Trip! {
         didSet {
@@ -27,84 +37,52 @@ class TripDetailViewController: UIViewController, UITableViewDataSource, UITextF
         }
     }
     var dataController: DataController!
-    var info = [String]()
-    var toDoList = [String]()
-    var packList = [String]()
     
     // MARK: - View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        textInputView.adjustToKeyboard()
-        textInputView.isHidden = true
-        tableView.dataSource = self
-        textField.delegate = self
-        let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))
-        tap.cancelsTouchesInView = false
-        self.view.addGestureRecognizer(tap)
-        segmentedControl.setTitle("Info", forSegmentAt: Segment.info.rawValue)
-        segmentedControl.setTitle("ToDo List", forSegmentAt: Segment.toDoList.rawValue)
-        segmentedControl.setTitle("Pack List", forSegmentAt: Segment.packList.rawValue)
+        setupSegmentedControl()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillDisappear(animated)
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+    }
+    
     // MARK: - Actions
     
     @IBAction func valueChanged(_ sender: UISegmentedControl) {
-        switch segmentedControl.selectedSegmentIndex {
-        case 0:
-            textInputView.isHidden = true
-        default:
-            textInputView.isHidden = false
-        }
-        tableView.reloadData()
-    }
-    
-    // MARK: - TableViewDataSource Methods
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch segmentedControl.selectedSegmentIndex {
-        case 0:
-            return info.count
-        case 1:
-            return toDoList.count
-        default:
-            return packList.count
+        if sender.selectedSegmentIndex == 0 {
+            UIView.animate(withDuration: 0.5, animations: {
+                self.firstContainerView.alpha = 1
+                self.secondContainerView.alpha = 0
+            })
+        } else {
+            UIView.animate(withDuration: 0.5, animations: {
+                self.firstContainerView.alpha = 0
+                self.secondContainerView.alpha = 1
+            })
         }
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        switch segmentedControl.selectedSegmentIndex {
-        case 0:
-            cell.textLabel?.text = info[indexPath.row]
-        case 1:
-            cell.textLabel?.text = toDoList[indexPath.row]
-        default:
-            cell.textLabel?.text = packList[indexPath.row]
-        }
-        return cell
+    // MARK: - Methods
+    
+    private func setupSegmentedControl() {
+        segmentedControl.setTitle(Segment.toDoList.title(), forSegmentAt: Segment.toDoList.rawValue)
+        //        segmentedControl.setTitle(Segment.packList.title(), forSegmentAt: Segment.packList.rawValue)
+        segmentedControl.setTitle(Segment.info.title(), forSegmentAt: Segment.info.rawValue)
+        segmentedControl.selectedSegmentIndex = 0
     }
     
-    // MARK: - TextFieldDelegate Methods
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        if let item = textField.text {
-            switch segmentedControl.selectedSegmentIndex {
-            case 0:
-                return true
-            case 1:
-                toDoList.append(item)
-            default:
-                packList.append(item)
-            }
-            textField.text = nil
-            tableView.reloadData()
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == SegueIdentifier.toToDoList.rawValue {
+            guard let toDoListViewController = segue.destination as? ToDoListViewController else { return }
+            toDoListViewController.selectedTrip = selectedTrip
+            toDoListViewController.dataController = dataController
         }
-        return true
     }
 }

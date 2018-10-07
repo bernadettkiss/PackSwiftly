@@ -30,6 +30,8 @@
 		CFCB3D102156AE9E00BC8E9E /* UIView+AdjustToKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFCB3D0F2156AE9E00BC8E9E /* UIView+AdjustToKeyboard.swift */; };
 		CFEF96872153065800E7F637 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFEF96862153065800E7F637 /* Constants.swift */; };
 		CFEF968921530A7900E7F637 /* TripDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFEF968821530A7900E7F637 /* TripDetailViewController.swift */; };
+		CFF335972167E27800F2D384 /* ToDoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFF335962167E27800F2D384 /* ToDoListViewController.swift */; };
+		CFF335992167E2C400F2D384 /* TripInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFF335982167E2C400F2D384 /* TripInfoViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +60,8 @@
 		CFCB3D0F2156AE9E00BC8E9E /* UIView+AdjustToKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+AdjustToKeyboard.swift"; sourceTree = "<group>"; };
 		CFEF96862153065800E7F637 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		CFEF968821530A7900E7F637 /* TripDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripDetailViewController.swift; sourceTree = "<group>"; };
+		CFF335962167E27800F2D384 /* ToDoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListViewController.swift; sourceTree = "<group>"; };
+		CFF335982167E2C400F2D384 /* TripInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripInfoViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +81,8 @@
 				CF9546C32134D89900943C13 /* TripsViewController.swift */,
 				CF6276602146F33600F77CAD /* NewTripViewController.swift */,
 				CFEF968821530A7900E7F637 /* TripDetailViewController.swift */,
+				CFF335962167E27800F2D384 /* ToDoListViewController.swift */,
+				CFF335982167E2C400F2D384 /* TripInfoViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -226,12 +232,14 @@
 				CF6276652147062900F77CAD /* DateTableViewCell.swift in Sources */,
 				CF1AE1DF213709D70089FAA4 /* PhotoCollectionViewCell.swift in Sources */,
 				CF7FF9C5215AC50400B51F16 /* TransparentTextField.swift in Sources */,
+				CFF335992167E2C400F2D384 /* TripInfoViewController.swift in Sources */,
 				CF1AE1DD2135C3180089FAA4 /* FlickrClientConstants.swift in Sources */,
 				CF9546C42134D89900943C13 /* TripsViewController.swift in Sources */,
 				CF9546C22134D89900943C13 /* AppDelegate.swift in Sources */,
 				CFC88AFC2142F42E000BE44F /* TripTableViewCell.swift in Sources */,
 				CF6276632146F88200F77CAD /* TextFieldTableViewCell.swift in Sources */,
 				CFEF968921530A7900E7F637 /* TripDetailViewController.swift in Sources */,
+				CFF335972167E27800F2D384 /* ToDoListViewController.swift in Sources */,
 				CF6276672147125F00F77CAD /* DatePickerTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
