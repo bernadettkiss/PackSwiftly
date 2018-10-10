@@ -8,7 +8,13 @@
 
 import Foundation
 
+typealias Parameters = [String: String]
 typealias JSONObject = [String: AnyObject]
+
+enum Client: String {
+    case flickr
+    case openWeatherMap
+}
 
 enum NetworkResponse {
     case success(response: Any)
@@ -21,7 +27,8 @@ class NetworkManager {
     
     var session = URLSession.shared
     
-    func GET(url: URL, completionHandler: @escaping (_ networkResponse: NetworkResponse) -> Void) {
+    func request(client: Client, pathExtension: String?, urlParameters: Parameters, completionHandler: @escaping (_ networkResponse: NetworkResponse) -> Void) {
+        let url = buildURL(client: client, pathExtension: pathExtension, urlParameters: urlParameters)
         let request = URLRequest(url: url)
         let task = session.dataTask(with: request) { (data, response, error) in
             
@@ -51,6 +58,33 @@ class NetworkManager {
             }
         }
         task.resume()
+    }
+    
+    private func buildURL(client: Client, pathExtension: String?, urlParameters: Parameters) -> URL {
+        var components = URLComponents()
+        
+        var pathExtensionString = ""
+        if let pathExtension = pathExtension {
+            pathExtensionString = "/" + pathExtension
+        }
+        
+        switch client {
+        case .flickr:
+            components.scheme = FlickrClient.Constants.ApiScheme
+            components.host = FlickrClient.Constants.ApiHost
+            components.path = FlickrClient.Constants.ApiPath + pathExtensionString
+        case .openWeatherMap:
+            components.scheme = OpenWeatherMapClient.Constants.ApiScheme
+            components.host = OpenWeatherMapClient.Constants.ApiHost
+            components.path = OpenWeatherMapClient.Constants.ApiPath + pathExtensionString
+        }
+        
+        components.queryItems = [URLQueryItem]()
+        for (key, value) in urlParameters {
+            let queryItem = URLQueryItem(name: key, value: value)
+            components.queryItems?.append(queryItem)
+        }
+        return components.url!
     }
     
     func downloadImage(imageURL: URL, completionHandler: @escaping (_ networkResponse: NetworkResponse) -> Void) {

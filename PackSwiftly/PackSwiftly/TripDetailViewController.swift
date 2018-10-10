@@ -84,5 +84,9 @@ class TripDetailViewController: UIViewController {
             toDoListViewController.selectedTrip = selectedTrip
             toDoListViewController.dataController = dataController
         }
+        if segue.identifier == SegueIdentifier.toTripInfo.rawValue {
+            guard let tripInfoViewController = segue.destination as? TripInfoViewController else { return }
+            tripInfoViewController.selectedTrip = selectedTrip
+        }
     }
 }

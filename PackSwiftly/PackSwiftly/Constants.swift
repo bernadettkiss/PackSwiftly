@@ -12,4 +12,5 @@ enum SegueIdentifier: String {
     case toNewTrip = "toNewTrip"
     case toTripDetail = "toTripDetail"
     case toToDoList = "toToDoList"
+    case toTripInfo = "toTripInfo"
 }

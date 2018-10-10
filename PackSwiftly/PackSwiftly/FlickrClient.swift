@@ -8,9 +8,7 @@
 
 import Foundation
 
-typealias Parameters = [String: String]
-
-enum Result {
+enum FlickrResult {
     case success(photos: [Photo])
     case failure
 }
@@ -24,10 +22,10 @@ class FlickrClient {
     
     static let shared = FlickrClient()
     
-    func getPhotos(latitude: Double, longitude: Double, text: String, completionHandler: @escaping (Result) -> Void) {
+    func getPhotos(latitude: Double, longitude: Double, text: String, completionHandler: @escaping (FlickrResult) -> Void) {
         if verifyCoordinate(latitude: latitude, longitude: longitude) {
             let urlParameters = flickrURLParameters(latitude: latitude, longitude: longitude, text: text)
-            NetworkManager.shared.GET(url: flickrURL(parameters: urlParameters)) { networkResponse in
+            NetworkManager.shared.request(client: .flickr, pathExtension: nil, urlParameters: urlParameters) { networkResponse in
                 switch networkResponse {
                 case .failure(error: let error):
                     debugPrint(error)
@@ -36,7 +34,7 @@ class FlickrClient {
                 case .success(response: let result):
                     let parsedResult = self.process(result as! JSONObject)
                     if let parsedPhotos = parsedResult {
-                        completionHandler(Result.success(photos: parsedPhotos))
+                        completionHandler(FlickrResult.success(photos: parsedPhotos))
                     } else {
                         completionHandler(.failure)
                     }
@@ -77,22 +75,7 @@ class FlickrClient {
         return "\(minimumLon),\(minimumLat),\(maximumLon),\(maximumLat)"
     }
     
-    private func flickrURL(parameters: Parameters) -> URL {
-        var components = URLComponents()
-        components.scheme = Constants.ApiScheme
-        components.host = Constants.ApiHost
-        components.path = Constants.ApiPath
-        
-        var queryItems = [URLQueryItem]()
-        for (key, value) in parameters {
-            let queryItem = URLQueryItem(name: key, value: value)
-            queryItems.append(queryItem)
-        }
-        components.queryItems = queryItems
-        return components.url!
-    }
-    
-    private func process(_ result: JSONObject) -> ([Photo]?) {
+    private func process(_ result: JSONObject) -> [Photo]? {
         guard let status = result[ResponseKeys.Status] as? String, status == ResponseValues.OKStatus,
             let photosDictionary = result[ResponseKeys.Photos] as? [String: AnyObject], let photoArray = photosDictionary[ResponseKeys.Photo] as? [[String: AnyObject]] else {
                 return (nil)
