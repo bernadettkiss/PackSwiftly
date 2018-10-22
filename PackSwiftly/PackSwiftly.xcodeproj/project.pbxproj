@@ -11,6 +11,8 @@
 		CF1AE1DD2135C3180089FAA4 /* FlickrClientConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1AE1DC2135C3180089FAA4 /* FlickrClientConstants.swift */; };
 		CF1AE1DF213709D70089FAA4 /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1AE1DE213709D70089FAA4 /* PhotoCollectionViewCell.swift */; };
 		CF1AE1E4213718C00089FAA4 /* ApiKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1AE1E3213718C00089FAA4 /* ApiKeys.swift */; };
+		CF21939921750395004A4390 /* ToDoItem+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF21939821750395004A4390 /* ToDoItem+Extensions.swift */; };
+		CF21939B21750723004A4390 /* Trip+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF21939A21750723004A4390 /* Trip+Extensions.swift */; };
 		CF6276612146F33600F77CAD /* NewTripViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF6276602146F33600F77CAD /* NewTripViewController.swift */; };
 		CF6276632146F88200F77CAD /* TextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF6276622146F88200F77CAD /* TextFieldTableViewCell.swift */; };
 		CF6276652147062900F77CAD /* DateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF6276642147062900F77CAD /* DateTableViewCell.swift */; };
@@ -40,6 +42,8 @@
 		CF1AE1DC2135C3180089FAA4 /* FlickrClientConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrClientConstants.swift; sourceTree = "<group>"; };
 		CF1AE1DE213709D70089FAA4 /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 		CF1AE1E3213718C00089FAA4 /* ApiKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiKeys.swift; sourceTree = "<group>"; };
+		CF21939821750395004A4390 /* ToDoItem+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ToDoItem+Extensions.swift"; sourceTree = "<group>"; };
+		CF21939A21750723004A4390 /* Trip+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Trip+Extensions.swift"; sourceTree = "<group>"; };
 		CF6276602146F33600F77CAD /* NewTripViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTripViewController.swift; sourceTree = "<group>"; };
 		CF6276622146F88200F77CAD /* TextFieldTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldTableViewCell.swift; sourceTree = "<group>"; };
 		CF6276642147062900F77CAD /* DateTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateTableViewCell.swift; sourceTree = "<group>"; };
@@ -109,6 +113,8 @@
 			isa = PBXGroup;
 			children = (
 				CF9546C82134D89900943C13 /* PackSwiftly.xcdatamodeld */,
+				CF21939A21750723004A4390 /* Trip+Extensions.swift */,
+				CF21939821750395004A4390 /* ToDoItem+Extensions.swift */,
 				CF9546D6213591F600943C13 /* DataController.swift */,
 				CF9546D82135B2A000943C13 /* FlickrClient.swift */,
 				CF1AE1DC2135C3180089FAA4 /* FlickrClientConstants.swift */,
@@ -238,10 +244,12 @@
 				CF7FF9C5215AC50400B51F16 /* TransparentTextField.swift in Sources */,
 				CFF335992167E2C400F2D384 /* TripInfoViewController.swift in Sources */,
 				CF1AE1DD2135C3180089FAA4 /* FlickrClientConstants.swift in Sources */,
+				CF21939B21750723004A4390 /* Trip+Extensions.swift in Sources */,
 				CF9546C42134D89900943C13 /* TripsViewController.swift in Sources */,
 				CF9546C22134D89900943C13 /* AppDelegate.swift in Sources */,
 				CFC88AFC2142F42E000BE44F /* TripTableViewCell.swift in Sources */,
 				CF6276632146F88200F77CAD /* TextFieldTableViewCell.swift in Sources */,
+				CF21939921750395004A4390 /* ToDoItem+Extensions.swift in Sources */,
 				CFEF968921530A7900E7F637 /* TripDetailViewController.swift in Sources */,
 				CFF335972167E27800F2D384 /* ToDoListViewController.swift in Sources */,
 				CF6276672147125F00F77CAD /* DatePickerTableViewCell.swift in Sources */,

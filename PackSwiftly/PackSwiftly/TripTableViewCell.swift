@@ -14,6 +14,7 @@ class TripTableViewCell: UITableViewCell {
     @IBOutlet weak var transparentView: UIView!
     @IBOutlet weak var destinationNameLabel: UILabel!
     @IBOutlet weak var tripDatesLabel: UILabel!
+    @IBOutlet weak var daysLabel: UILabel!
     
     static let reuseIdentifier = "tripTableViewCell"
     
@@ -31,7 +32,7 @@ class TripTableViewCell: UITableViewCell {
         }
     }
     
-    func update(withImage image: UIImage?, text: String, startDate: Date, endDate: Date) {
+    func update(withImage image: UIImage?, text: String, startDate: Date, endDate: Date, daysFromToday: Int?) {
         if let image = image {
             destinationImageView.image = image
             destinationImageView.contentMode = .scaleAspectFill
@@ -40,11 +41,30 @@ class TripTableViewCell: UITableViewCell {
         }
         destinationNameLabel.text = text
         tripDatesLabel.text = "\(format(date: startDate)) - \(format(date: endDate))"
+        daysLabel.text = title(for: daysFromToday)
     }
     
     private func format(date: Date) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .medium
         return dateFormatter.string(from: date)
+    }
+    
+    private func title(for days: Int?) -> String {
+        if let days = days {
+            if days > 1 {
+                return "\(days) days away"
+            }
+            else if days == 1 {
+                return "\(days) day away"
+            }
+            else if days == 0 {
+                return "Today"
+            } else {
+                return ""
+            }
+        } else {
+            return ""
+        }
     }
 }

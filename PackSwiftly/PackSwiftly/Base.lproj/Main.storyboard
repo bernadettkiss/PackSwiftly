@@ -46,17 +46,33 @@
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="top" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="DQO-mw-V3Y">
                                                             <rect key="frame" x="5" y="5" width="365" height="40"/>
                                                             <subviews>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Id-Ls-jBg">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="44.5" height="19"/>
-                                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                                                    <nil key="highlightedColor"/>
-                                                                </label>
+                                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="l97-iE-mWI">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="365" height="19"/>
+                                                                    <subviews>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Id-Ls-jBg">
+                                                                            <rect key="frame" x="0.0" y="0.0" width="314" height="19"/>
+                                                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                        </label>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Onc-6W-TA8">
+                                                                            <rect key="frame" x="315" y="0.0" width="50" height="19"/>
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                            <nil key="textColor"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                        </label>
+                                                                    </subviews>
+                                                                </stackView>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qF7-cz-u4q">
                                                                     <rect key="frame" x="0.0" y="21" width="42" height="19"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                             </subviews>
+                                                            <constraints>
+                                                                <constraint firstItem="l97-iE-mWI" firstAttribute="top" secondItem="DQO-mw-V3Y" secondAttribute="top" id="7Og-yf-ath"/>
+                                                                <constraint firstItem="l97-iE-mWI" firstAttribute="leading" secondItem="DQO-mw-V3Y" secondAttribute="leading" id="9wV-0a-i4Z"/>
+                                                                <constraint firstAttribute="trailing" secondItem="l97-iE-mWI" secondAttribute="trailing" id="AkB-kF-Txv"/>
+                                                            </constraints>
                                                         </stackView>
                                                     </subviews>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -81,6 +97,7 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <connections>
+                                            <outlet property="daysLabel" destination="Onc-6W-TA8" id="0Mo-Q0-Dpx"/>
                                             <outlet property="destinationImageView" destination="tTT-6q-xt6" id="CRx-sl-pBy"/>
                                             <outlet property="destinationNameLabel" destination="6Id-Ls-jBg" id="v4v-hV-o5g"/>
                                             <outlet property="transparentView" destination="DI0-ea-K33" id="cDQ-H6-HVS"/>

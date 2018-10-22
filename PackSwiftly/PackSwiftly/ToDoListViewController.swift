@@ -20,7 +20,7 @@ class ToDoListViewController: UIViewController, UITableViewDataSource, UITableVi
     lazy var fetchedResultsController: NSFetchedResultsController<ToDoItem> = {
         let fetchRequest: NSFetchRequest<ToDoItem> = ToDoItem.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "trip == %@", selectedTrip)
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "done", ascending: true), NSSortDescriptor(key: "title", ascending: true)]
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "done", ascending: true), NSSortDescriptor(key: "creationDate", ascending: true)]
         let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: dataController.viewContext, sectionNameKeyPath: "done", cacheName: nil)
         fetchedResultsController.delegate = self
         return fetchedResultsController

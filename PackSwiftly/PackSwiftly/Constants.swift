@@ -14,3 +14,10 @@ enum SegueIdentifier: String {
     case toToDoList = "toToDoList"
     case toTripInfo = "toTripInfo"
 }
+
+enum TripSwipeActionTitle: String {
+    case delete = "Delete"
+    case edit = "Edit"
+    case archive = "Archive"
+    case reactivate = "Reactivate"
+}
