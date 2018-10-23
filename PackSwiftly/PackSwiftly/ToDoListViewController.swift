@@ -109,10 +109,10 @@ extension ToDoListViewController: NSFetchedResultsControllerDelegate {
         switch type {
         case .insert:
             let sectionIndexSet = NSIndexSet(index: sectionIndex)
-            self.tableView.insertSections(sectionIndexSet as IndexSet, with: UITableViewRowAnimation.fade)
+            self.tableView.insertSections(sectionIndexSet as IndexSet, with: UITableView.RowAnimation.fade)
         case .delete:
             let sectionIndexSet = NSIndexSet(index: sectionIndex)
-            self.tableView.deleteSections(sectionIndexSet as IndexSet, with: UITableViewRowAnimation.fade)
+            self.tableView.deleteSections(sectionIndexSet as IndexSet, with: UITableView.RowAnimation.fade)
         default:
             ()
         }

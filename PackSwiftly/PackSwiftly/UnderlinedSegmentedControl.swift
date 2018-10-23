@@ -26,8 +26,8 @@ class UnderlinedSegmentedControl: UISegmentedControl {
     private func configure() {
         backgroundColor = .clear
         tintColor = .clear
-        setTitleTextAttributes([NSAttributedStringKey.foregroundColor: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)], for: .normal)
-        setTitleTextAttributes([NSAttributedStringKey.foregroundColor: #colorLiteral(red: 0.01680417731, green: 0.1983509958, blue: 1, alpha: 1)], for: .selected)
+        setTitleTextAttributes([NSAttributedString.Key.foregroundColor: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)], for: .normal)
+        setTitleTextAttributes([NSAttributedString.Key.foregroundColor: #colorLiteral(red: 0.01680417731, green: 0.1983509958, blue: 1, alpha: 1)], for: .selected)
         translatesAutoresizingMaskIntoConstraints = false
         
         lineView.frame = CGRect(x: 0.0, y: self.frame.size.height, width: self.frame.size.width / CGFloat(numberOfSegments), height: 5.0)

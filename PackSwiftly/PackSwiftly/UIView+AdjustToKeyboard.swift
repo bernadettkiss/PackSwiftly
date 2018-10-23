@@ -11,18 +11,18 @@ import UIKit
 extension UIView {
     
     func adjustToKeyboard() {
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChangeFrame(_:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChangeFrame(_:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
     }
     
     @objc func keyboardWillChangeFrame(_ notification: NSNotification) {
         if let userInfo = notification.userInfo {
-            let animationDuration = userInfo[UIKeyboardAnimationDurationUserInfoKey] as! Double
-            let animationCurve = userInfo[UIKeyboardAnimationCurveUserInfoKey] as! UInt
-            let keyboardStartFrame = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
-            let keyboardEndFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+            let animationDuration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as! Double
+            let animationCurve = userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as! UInt
+            let keyboardStartFrame = (userInfo[UIResponder.keyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
+            let keyboardEndFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
             let keyboardHeight = keyboardEndFrame.origin.y - keyboardStartFrame.origin.y
             
-            UIView.animateKeyframes(withDuration: animationDuration, delay: 0.0, options: UIViewKeyframeAnimationOptions(rawValue: animationCurve), animations: {
+            UIView.animateKeyframes(withDuration: animationDuration, delay: 0.0, options: UIView.KeyframeAnimationOptions(rawValue: animationCurve), animations: {
                 self.frame.origin.y += keyboardHeight
             }) { (true) in
                 self.layoutIfNeeded()
