@@ -15,6 +15,7 @@ enum OpenWeatherMapResult {
 
 struct WeatherData {
     let date: String
+    let temperature: Measurement<UnitTemperature>
     let minimumTemperature: Measurement<UnitTemperature>
     let maximumTemperature: Measurement<UnitTemperature>
     let description: String
@@ -118,6 +119,7 @@ class OpenWeatherMapClient {
     private func weatherData(fromJSON json: [String: AnyObject]) -> WeatherData? {
         guard let timeResult = json[ResponseKeys.Date] as? Double,
             let mainDictionary = json[ResponseKeys.Main] as? [String: AnyObject],
+            let temperature = mainDictionary[ResponseKeys.Temp] as? Double,
             let minimumTemperature = mainDictionary[ResponseKeys.TempMin] as? Double,
             let maximumTemperature = mainDictionary[ResponseKeys.TempMax] as? Double,
             let weatherArray = json[ResponseKeys.Weather] as? [[String: AnyObject]],
@@ -126,10 +128,12 @@ class OpenWeatherMapClient {
         }
         let date = Date(timeIntervalSince1970: timeResult)
         let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .medium
-        dateFormatter.timeStyle = .medium
+//        dateFormatter.dateStyle = .medium
+//        dateFormatter.timeStyle = .medium
+        dateFormatter.dateStyle = .short
+        dateFormatter.timeStyle = .none
         dateFormatter.timeZone = TimeZone.current
         let localDate = dateFormatter.string(from: date)
-        return WeatherData(date: localDate, minimumTemperature: Measurement(value: minimumTemperature, unit: .celsius), maximumTemperature: Measurement(value: maximumTemperature, unit: .celsius), description: description)
+        return WeatherData(date: localDate, temperature: Measurement(value: temperature, unit: .celsius), minimumTemperature: Measurement(value: minimumTemperature, unit: .celsius), maximumTemperature: Measurement(value: maximumTemperature, unit: .celsius), description: description)
     }
 }

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2A4885556CA433A1685C0CD3 /* Pods_PackSwiftly.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65C49FEB4F988D20FEE7731F /* Pods_PackSwiftly.framework */; };
 		CF1AE1DB2135C2C30089FAA4 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1AE1DA2135C2C30089FAA4 /* NetworkManager.swift */; };
 		CF1AE1DD2135C3180089FAA4 /* FlickrClientConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1AE1DC2135C3180089FAA4 /* FlickrClientConstants.swift */; };
 		CF1AE1DF213709D70089FAA4 /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1AE1DE213709D70089FAA4 /* PhotoCollectionViewCell.swift */; };
@@ -38,6 +39,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		65C49FEB4F988D20FEE7731F /* Pods_PackSwiftly.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PackSwiftly.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C82076955EA3DB2321A48421 /* Pods-PackSwiftly.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PackSwiftly.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PackSwiftly/Pods-PackSwiftly.debug.xcconfig"; sourceTree = "<group>"; };
 		CF1AE1DA2135C2C30089FAA4 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		CF1AE1DC2135C3180089FAA4 /* FlickrClientConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrClientConstants.swift; sourceTree = "<group>"; };
 		CF1AE1DE213709D70089FAA4 /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -68,6 +71,7 @@
 		CFEF968821530A7900E7F637 /* TripDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripDetailViewController.swift; sourceTree = "<group>"; };
 		CFF335962167E27800F2D384 /* ToDoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListViewController.swift; sourceTree = "<group>"; };
 		CFF335982167E2C400F2D384 /* TripInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripInfoViewController.swift; sourceTree = "<group>"; };
+		EB2FEE274C7116649E0DA211 /* Pods-PackSwiftly.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PackSwiftly.release.xcconfig"; path = "Pods/Target Support Files/Pods-PackSwiftly/Pods-PackSwiftly.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,12 +79,30 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2A4885556CA433A1685C0CD3 /* Pods_PackSwiftly.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3A1EEC328114737D6326A1DA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				65C49FEB4F988D20FEE7731F /* Pods_PackSwiftly.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		90929A09DE3E52597217434F /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				C82076955EA3DB2321A48421 /* Pods-PackSwiftly.debug.xcconfig */,
+				EB2FEE274C7116649E0DA211 /* Pods-PackSwiftly.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		CF1AE1E0213718660089FAA4 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -129,6 +151,8 @@
 			children = (
 				CF9546C02134D89900943C13 /* PackSwiftly */,
 				CF9546BF2134D89900943C13 /* Products */,
+				90929A09DE3E52597217434F /* Pods */,
+				3A1EEC328114737D6326A1DA /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -164,9 +188,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = CF9546D32134D89C00943C13 /* Build configuration list for PBXNativeTarget "PackSwiftly" */;
 			buildPhases = (
+				13365C8E810928043D6A7AC4 /* [CP] Check Pods Manifest.lock */,
 				CF9546BA2134D89900943C13 /* Sources */,
 				CF9546BB2134D89900943C13 /* Frameworks */,
 				CF9546BC2134D89900943C13 /* Resources */,
+				E237A78D3AF1E94D0DC33C80 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -223,6 +249,53 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		13365C8E810928043D6A7AC4 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-PackSwiftly-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E237A78D3AF1E94D0DC33C80 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-PackSwiftly/Pods-PackSwiftly-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Charts/Charts.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Charts.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PackSwiftly/Pods-PackSwiftly-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		CF9546BA2134D89900943C13 /* Sources */ = {
@@ -395,6 +468,7 @@
 		};
 		CF9546D42134D89C00943C13 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C82076955EA3DB2321A48421 /* Pods-PackSwiftly.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -413,6 +487,7 @@
 		};
 		CF9546D52134D89C00943C13 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EB2FEE274C7116649E0DA211 /* Pods-PackSwiftly.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
