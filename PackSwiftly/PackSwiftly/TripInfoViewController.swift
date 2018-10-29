@@ -11,14 +11,16 @@ import Charts
 
 class TripInfoViewController: UIViewController, IAxisValueFormatter {
     
+    @IBOutlet weak var unitSwitch: UISwitch!
     @IBOutlet weak var chartView: LineChartView!
     @IBOutlet weak var textView: UITextView!
     
     var selectedTrip: Trip!
     var forecast = [WeatherData]()
     var dates = [String]()
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
-    lazy var formatter: NumberFormatter = {
+    lazy var celsiusFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.maximumFractionDigits = 1
         formatter.negativeSuffix = "℃"
@@ -26,24 +28,22 @@ class TripInfoViewController: UIViewController, IAxisValueFormatter {
         return formatter
     }()
     
+    lazy var fahrenheitFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.maximumFractionDigits = 1
+        formatter.negativeSuffix = "℉"
+        formatter.positiveSuffix = "℉"
+        return formatter
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let destinationName = selectedTrip.destination?.name
-        let latitude = selectedTrip.destination?.latitude
-        let longitude = selectedTrip.destination?.longitude
-        OpenWeatherMapClient.shared.getForecast(latitude: latitude!, longitude: longitude!) { (result) in
-            switch result {
-            case .success(weatherData: let weatherDataArray):
-                self.forecast = weatherDataArray
-                DispatchQueue.main.async {
-                    self.setChart(dataPoints: self.forecast)
-                }
-            case .failure:
-                self.forecast = []
-            }
-        }
+        unitSwitch.setOn(appDelegate.unitOfTemperatureIsCelsius, animated: true)
         
-        WikipediaClient.shared.getData(about: destinationName!) { result in
+        getWeatherForecast()
+        
+        WikipediaClient.shared.getInfo(about: destinationName!) { result in
             switch result {
             case .success(info: let destinationInfo):
                 DispatchQueue.main.async {
@@ -57,12 +57,39 @@ class TripInfoViewController: UIViewController, IAxisValueFormatter {
         }
     }
     
+    func getWeatherForecast() {
+        let latitude = selectedTrip.destination?.latitude
+        let longitude = selectedTrip.destination?.longitude
+        OpenWeatherMapClient.shared.getForecast(latitude: latitude!, longitude: longitude!, inCelsius: appDelegate.unitOfTemperatureIsCelsius) { (result) in
+            switch result {
+            case .success(weatherData: let weatherDataArray):
+                self.forecast = weatherDataArray
+                DispatchQueue.main.async {
+                    self.setChart(dataPoints: self.forecast)
+                }
+            case .failure:
+                self.forecast = []
+            }
+        }
+    }
+    
+    
+    @IBAction func unitSwitchValueChanged(_ sender: UISwitch) {
+        appDelegate.unitOfTemperatureIsCelsius = sender.isOn
+        UserDefaults.standard.set(sender.isOn, forKey: "unitOfTemperatureIsCelsius")
+        getWeatherForecast()
+    }
+    
     private func setChart(dataPoints: [WeatherData]) {
         chartView.noDataText = "No weather data available"
         chartView.isUserInteractionEnabled = false
         
         chartView.rightAxis.enabled = false
-        chartView.leftAxis.valueFormatter = DefaultAxisValueFormatter(formatter: formatter)
+        if appDelegate.unitOfTemperatureIsCelsius {
+            chartView.leftAxis.valueFormatter = DefaultAxisValueFormatter(formatter: celsiusFormatter)
+        } else {
+            chartView.leftAxis.valueFormatter = DefaultAxisValueFormatter(formatter: fahrenheitFormatter)
+        }
         
         let xAxis = chartView.xAxis
         xAxis.labelPosition = .bottom

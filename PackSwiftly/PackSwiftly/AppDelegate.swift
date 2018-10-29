@@ -14,8 +14,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     let dataController = DataController(modelName: "PackSwiftly")
+    public var unitOfTemperatureIsCelsius = true
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
+        if !UserDefaults.standard.bool(forKey: "unitOfTemperatureIsCelsius") {
+            unitOfTemperatureIsCelsius = false
+        }
         
         let navigationController = window?.rootViewController as! UINavigationController
         let tripsViewController = navigationController.topViewController as! TripsViewController

@@ -24,6 +24,7 @@ struct WeatherData {
 class OpenWeatherMapClient {
     
     static let shared = OpenWeatherMapClient()
+    var unitOfTemperatureIsCelsius = true
     
     struct Constants {
         static let ApiScheme = "https"
@@ -43,6 +44,7 @@ class OpenWeatherMapClient {
     struct ParameterValues {
         static let APIKey = myOpenWeatherMapApiKey
         static let Metric = "metric"
+        static let Imperial = "imperial"
     }
     
     struct ResponseKeys {
@@ -56,7 +58,8 @@ class OpenWeatherMapClient {
         static let Description = "description"
     }
     
-    func getWeatherData(latitude: Double, longitude: Double, completionHandler: @escaping (OpenWeatherMapResult) -> Void) {
+    func getWeatherData(latitude: Double, longitude: Double, inCelsius: Bool, completionHandler: @escaping (OpenWeatherMapResult) -> Void) {
+        unitOfTemperatureIsCelsius = inCelsius
         let urlParameters = openWeatherMapURLParameters(latitude: latitude, longitude: longitude)
         NetworkManager.shared.request(client: .openWeatherMap, pathExtension: Constants.CurrentWeatherPathExtension, urlParameters: urlParameters) { networkResponse in
             switch networkResponse {
@@ -75,7 +78,8 @@ class OpenWeatherMapClient {
         }
     }
     
-    func getForecast(latitude: Double, longitude: Double, completionHandler: @escaping (OpenWeatherMapResult) -> Void) {
+    func getForecast(latitude: Double, longitude: Double, inCelsius: Bool, completionHandler: @escaping (OpenWeatherMapResult) -> Void) {
+        unitOfTemperatureIsCelsius = inCelsius
         let urlParameters = openWeatherMapURLParameters(latitude: latitude, longitude: longitude)
         NetworkManager.shared.request(client: .openWeatherMap, pathExtension: Constants.ForecastPathExtension, urlParameters: urlParameters) { networkResponse in
             switch networkResponse {
@@ -95,10 +99,15 @@ class OpenWeatherMapClient {
     }
     
     private func openWeatherMapURLParameters(latitude: Double, longitude: Double) -> Parameters {
+        var units = ParameterValues.Metric
+        if !unitOfTemperatureIsCelsius {
+            units = ParameterValues.Imperial
+        }
+        
         let urlParameters = [
             ParameterKeys.Latitude: "\(latitude)",
             ParameterKeys.Longitude: "\(longitude)",
-            ParameterKeys.Units: ParameterValues.Metric,
+            ParameterKeys.Units: units,
             ParameterKeys.APIKey: ParameterValues.APIKey
         ]
         return urlParameters
@@ -128,12 +137,18 @@ class OpenWeatherMapClient {
         }
         let date = Date(timeIntervalSince1970: timeResult)
         let dateFormatter = DateFormatter()
-//        dateFormatter.dateStyle = .medium
-//        dateFormatter.timeStyle = .medium
+        //        dateFormatter.dateStyle = .medium
+        //        dateFormatter.timeStyle = .medium
         dateFormatter.dateStyle = .short
         dateFormatter.timeStyle = .none
         dateFormatter.timeZone = TimeZone.current
         let localDate = dateFormatter.string(from: date)
-        return WeatherData(date: localDate, temperature: Measurement(value: temperature, unit: .celsius), minimumTemperature: Measurement(value: minimumTemperature, unit: .celsius), maximumTemperature: Measurement(value: maximumTemperature, unit: .celsius), description: description)
+        
+        var unit = UnitTemperature.celsius
+        if !unitOfTemperatureIsCelsius {
+            unit = UnitTemperature.fahrenheit
+        }
+        
+        return WeatherData(date: localDate, temperature: Measurement(value: temperature, unit: unit), minimumTemperature: Measurement(value: minimumTemperature, unit: unit), maximumTemperature: Measurement(value: maximumTemperature, unit: unit), description: description)
     }
 }
