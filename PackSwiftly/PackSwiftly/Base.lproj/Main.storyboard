@@ -506,59 +506,36 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="555"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="2a0-9X-eSt">
-                                <rect key="frame" x="0.0" y="300" width="375" height="255"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="WeatherDataCell" textLabel="dEl-2g-kt1" detailTextLabel="pti-Cl-uIO" style="IBUITableViewCellStyleSubtitle" id="rP7-jO-gEn">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="rP7-jO-gEn" id="c4W-mS-gGT">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="dEl-2g-kt1">
-                                                    <rect key="frame" x="15" y="5" width="33.5" height="20.5"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="pti-Cl-uIO">
-                                                    <rect key="frame" x="15" y="25.5" width="44" height="14.5"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </prototypes>
-                            </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iSh-8i-7Sq" customClass="LineChartView" customModule="Charts">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="300"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="300"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="300" id="hyW-bk-1IV"/>
                                 </constraints>
                             </view>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="N3I-5K-HT2">
+                                <rect key="frame" x="10" y="320" width="355" height="235"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="iSh-8i-7Sq" firstAttribute="top" secondItem="vHC-GL-O8U" secondAttribute="top" id="ENp-qy-mgO"/>
                             <constraint firstItem="iSh-8i-7Sq" firstAttribute="trailing" secondItem="NWv-Kn-NDi" secondAttribute="trailing" id="IaD-Be-bde"/>
-                            <constraint firstItem="2a0-9X-eSt" firstAttribute="top" secondItem="iSh-8i-7Sq" secondAttribute="bottom" id="USM-Dt-UQi"/>
-                            <constraint firstItem="2a0-9X-eSt" firstAttribute="leading" secondItem="vHC-GL-O8U" secondAttribute="leading" id="hQH-X6-4iy"/>
-                            <constraint firstItem="NWv-Kn-NDi" firstAttribute="bottom" secondItem="2a0-9X-eSt" secondAttribute="bottom" id="u51-o5-TLx"/>
+                            <constraint firstItem="NWv-Kn-NDi" firstAttribute="trailing" secondItem="N3I-5K-HT2" secondAttribute="trailing" constant="10" id="W2h-tf-Xz7"/>
+                            <constraint firstItem="N3I-5K-HT2" firstAttribute="top" secondItem="iSh-8i-7Sq" secondAttribute="bottom" id="aHM-Zf-Fj4"/>
+                            <constraint firstItem="iSh-8i-7Sq" firstAttribute="top" secondItem="NWv-Kn-NDi" secondAttribute="top" id="gRW-Za-41r"/>
+                            <constraint firstItem="NWv-Kn-NDi" firstAttribute="bottom" secondItem="N3I-5K-HT2" secondAttribute="bottom" id="tSV-cO-uGL"/>
+                            <constraint firstItem="N3I-5K-HT2" firstAttribute="leading" secondItem="NWv-Kn-NDi" secondAttribute="leading" constant="10" id="uyf-ed-yto"/>
                             <constraint firstItem="iSh-8i-7Sq" firstAttribute="leading" secondItem="NWv-Kn-NDi" secondAttribute="leading" id="xNX-DC-vys"/>
-                            <constraint firstItem="NWv-Kn-NDi" firstAttribute="trailing" secondItem="2a0-9X-eSt" secondAttribute="trailing" id="z2G-1u-d6l"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="NWv-Kn-NDi"/>
                     </view>
                     <connections>
                         <outlet property="chartView" destination="iSh-8i-7Sq" id="L6V-0K-0GP"/>
-                        <outlet property="tableView" destination="2a0-9X-eSt" id="HC2-Mt-Vna"/>
+                        <outlet property="textView" destination="N3I-5K-HT2" id="Ba3-cJ-0Gw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GsM-Lo-mF4" userLabel="First Responder" sceneMemberID="firstResponder"/>

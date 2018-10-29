@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2A4885556CA433A1685C0CD3 /* Pods_PackSwiftly.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65C49FEB4F988D20FEE7731F /* Pods_PackSwiftly.framework */; };
+		CF1256C5218756AA004281C1 /* WikipediaClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1256C4218756AA004281C1 /* WikipediaClient.swift */; };
 		CF1AE1DB2135C2C30089FAA4 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1AE1DA2135C2C30089FAA4 /* NetworkManager.swift */; };
 		CF1AE1DD2135C3180089FAA4 /* FlickrClientConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1AE1DC2135C3180089FAA4 /* FlickrClientConstants.swift */; };
 		CF1AE1DF213709D70089FAA4 /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1AE1DE213709D70089FAA4 /* PhotoCollectionViewCell.swift */; };
@@ -41,6 +42,7 @@
 /* Begin PBXFileReference section */
 		65C49FEB4F988D20FEE7731F /* Pods_PackSwiftly.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PackSwiftly.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C82076955EA3DB2321A48421 /* Pods-PackSwiftly.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PackSwiftly.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PackSwiftly/Pods-PackSwiftly.debug.xcconfig"; sourceTree = "<group>"; };
+		CF1256C4218756AA004281C1 /* WikipediaClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WikipediaClient.swift; sourceTree = "<group>"; };
 		CF1AE1DA2135C2C30089FAA4 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		CF1AE1DC2135C3180089FAA4 /* FlickrClientConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrClientConstants.swift; sourceTree = "<group>"; };
 		CF1AE1DE213709D70089FAA4 /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -141,6 +143,7 @@
 				CF9546D82135B2A000943C13 /* FlickrClient.swift */,
 				CF1AE1DC2135C3180089FAA4 /* FlickrClientConstants.swift */,
 				CF8345D8216BEC6C00EE995F /* OpenWeatherMapClient.swift */,
+				CF1256C4218756AA004281C1 /* WikipediaClient.swift */,
 				CF1AE1E3213718C00089FAA4 /* ApiKeys.swift */,
 			);
 			name = Model;
@@ -318,6 +321,7 @@
 				CF7FF9C5215AC50400B51F16 /* TransparentTextField.swift in Sources */,
 				CFF335992167E2C400F2D384 /* TripInfoViewController.swift in Sources */,
 				CF1AE1DD2135C3180089FAA4 /* FlickrClientConstants.swift in Sources */,
+				CF1256C5218756AA004281C1 /* WikipediaClient.swift in Sources */,
 				CF21939B21750723004A4390 /* Trip+Extensions.swift in Sources */,
 				CF9546C42134D89900943C13 /* TripsViewController.swift in Sources */,
 				CF9546C22134D89900943C13 /* AppDelegate.swift in Sources */,

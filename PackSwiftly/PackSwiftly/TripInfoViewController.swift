@@ -9,10 +9,10 @@
 import UIKit
 import Charts
 
-class TripInfoViewController: UIViewController, UITableViewDataSource, IAxisValueFormatter {
+class TripInfoViewController: UIViewController, IAxisValueFormatter {
     
     @IBOutlet weak var chartView: LineChartView!
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var textView: UITextView!
     
     var selectedTrip: Trip!
     var forecast = [WeatherData]()
@@ -28,8 +28,7 @@ class TripInfoViewController: UIViewController, UITableViewDataSource, IAxisValu
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.dataSource = self
-        
+        let destinationName = selectedTrip.destination?.name
         let latitude = selectedTrip.destination?.latitude
         let longitude = selectedTrip.destination?.longitude
         OpenWeatherMapClient.shared.getForecast(latitude: latitude!, longitude: longitude!) { (result) in
@@ -37,16 +36,28 @@ class TripInfoViewController: UIViewController, UITableViewDataSource, IAxisValu
             case .success(weatherData: let weatherDataArray):
                 self.forecast = weatherDataArray
                 DispatchQueue.main.async {
-                    self.tableView.reloadData()
                     self.setChart(dataPoints: self.forecast)
                 }
             case .failure:
                 self.forecast = []
             }
         }
+        
+        WikipediaClient.shared.getData(about: destinationName!) { result in
+            switch result {
+            case .success(info: let destinationInfo):
+                DispatchQueue.main.async {
+                    self.textView.text = destinationInfo
+                }
+            case .failure:
+                DispatchQueue.main.async {
+                    self.textView.text = "No data available"
+                }
+            }
+        }
     }
     
-    func setChart(dataPoints: [WeatherData]) {
+    private func setChart(dataPoints: [WeatherData]) {
         chartView.noDataText = "No weather data available"
         chartView.isUserInteractionEnabled = false
         
@@ -94,19 +105,5 @@ class TripInfoViewController: UIViewController, UITableViewDataSource, IAxisValu
     
     func stringForValue(_ value: Double, axis: AxisBase?) -> String {
         return dates[Int(value)]
-    }
-    
-    // MARK: - TableViewDataSource Methods
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return forecast.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "WeatherDataCell", for: indexPath)
-        let weatherData = forecast[indexPath.row]
-        cell.textLabel?.text = "\(weatherData.date) \(weatherData.minimumTemperature) \(weatherData.maximumTemperature)"
-        cell.detailTextLabel?.text = weatherData.description
-        return cell
     }
 }

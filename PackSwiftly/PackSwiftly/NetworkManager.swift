@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 typealias Parameters = [String: String]
 typealias JSONObject = [String: AnyObject]
@@ -14,6 +15,7 @@ typealias JSONObject = [String: AnyObject]
 enum Client: String {
     case flickr
     case openWeatherMap
+    case wikipedia
 }
 
 enum NetworkResponse {
@@ -28,9 +30,14 @@ class NetworkManager {
     var session = URLSession.shared
     
     func request(client: Client, pathExtension: String?, urlParameters: Parameters, completionHandler: @escaping (_ networkResponse: NetworkResponse) -> Void) {
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        
         let url = buildURL(client: client, pathExtension: pathExtension, urlParameters: urlParameters)
         let request = URLRequest(url: url)
         let task = session.dataTask(with: request) { (data, response, error) in
+            DispatchQueue.main.async {
+                UIApplication.shared.isNetworkActivityIndicatorVisible = false
+            }
             
             guard error == nil else {
                 let error = NetworkResponse.failure(error: error! as NSError)
@@ -77,6 +84,10 @@ class NetworkManager {
             components.scheme = OpenWeatherMapClient.Constants.ApiScheme
             components.host = OpenWeatherMapClient.Constants.ApiHost
             components.path = OpenWeatherMapClient.Constants.ApiPath + pathExtensionString
+        case .wikipedia:
+            components.scheme = WikipediaClient.Constants.ApiScheme
+            components.host = WikipediaClient.Constants.ApiHost
+            components.path = WikipediaClient.Constants.ApiPath + pathExtensionString
         }
         
         components.queryItems = [URLQueryItem]()
