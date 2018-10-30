@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2A4885556CA433A1685C0CD3 /* Pods_PackSwiftly.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65C49FEB4F988D20FEE7731F /* Pods_PackSwiftly.framework */; };
 		CF1256C5218756AA004281C1 /* WikipediaClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1256C4218756AA004281C1 /* WikipediaClient.swift */; };
+		CF1256C92187AC20004281C1 /* UIViewController+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1256C82187AC20004281C1 /* UIViewController+Alert.swift */; };
 		CF1AE1DB2135C2C30089FAA4 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1AE1DA2135C2C30089FAA4 /* NetworkManager.swift */; };
 		CF1AE1DD2135C3180089FAA4 /* FlickrClientConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1AE1DC2135C3180089FAA4 /* FlickrClientConstants.swift */; };
 		CF1AE1DF213709D70089FAA4 /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF1AE1DE213709D70089FAA4 /* PhotoCollectionViewCell.swift */; };
@@ -43,6 +44,7 @@
 		65C49FEB4F988D20FEE7731F /* Pods_PackSwiftly.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PackSwiftly.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C82076955EA3DB2321A48421 /* Pods-PackSwiftly.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PackSwiftly.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PackSwiftly/Pods-PackSwiftly.debug.xcconfig"; sourceTree = "<group>"; };
 		CF1256C4218756AA004281C1 /* WikipediaClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WikipediaClient.swift; sourceTree = "<group>"; };
+		CF1256C82187AC20004281C1 /* UIViewController+Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alert.swift"; sourceTree = "<group>"; };
 		CF1AE1DA2135C2C30089FAA4 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		CF1AE1DC2135C3180089FAA4 /* FlickrClientConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrClientConstants.swift; sourceTree = "<group>"; };
 		CF1AE1DE213709D70089FAA4 /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -127,6 +129,7 @@
 				CF8A9F8D214C318C00475EEE /* PhotosTableViewCell.swift */,
 				CF1AE1DE213709D70089FAA4 /* PhotoCollectionViewCell.swift */,
 				CFCB3D0F2156AE9E00BC8E9E /* UIView+AdjustToKeyboard.swift */,
+				CF1256C82187AC20004281C1 /* UIViewController+Alert.swift */,
 				CF7FF9C22159592600B51F16 /* UnderlinedSegmentedControl.swift */,
 				CF7FF9C4215AC50400B51F16 /* TransparentTextField.swift */,
 			);
@@ -323,6 +326,7 @@
 				CF1AE1DD2135C3180089FAA4 /* FlickrClientConstants.swift in Sources */,
 				CF1256C5218756AA004281C1 /* WikipediaClient.swift in Sources */,
 				CF21939B21750723004A4390 /* Trip+Extensions.swift in Sources */,
+				CF1256C92187AC20004281C1 /* UIViewController+Alert.swift in Sources */,
 				CF9546C42134D89900943C13 /* TripsViewController.swift in Sources */,
 				CF9546C22134D89900943C13 /* AppDelegate.swift in Sources */,
 				CFC88AFC2142F42E000BE44F /* TripTableViewCell.swift in Sources */,

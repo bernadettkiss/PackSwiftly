@@ -32,21 +32,18 @@ class NewTripViewController: UIViewController, UITableViewDataSource, UITableVie
     @IBOutlet weak var tripNavigationItem: UINavigationItem!
     @IBOutlet weak var tableView: UITableView!
     
-    var tripChangeType: TripChangeType = .create
+    lazy var tripChangeType: TripChangeType = .create
     
     var trip: Trip? {
         didSet {
             tripChangeType = trip == nil ? .create : .update
         }
     }
-    var destinationName: String?
-    var latitude: CLLocationDegrees?
-    var longitude: CLLocationDegrees?
-    var imageData: Data? = nil
+    
+    let builder = Trip.Builder()
     
     var dateFields = [DateField(title: "Start Date", value: Date()),
                       DateField(title: "End Date", value: Date())]
-    
     var datePickerIndexPath: IndexPath?
     var datePickerIsDisplayed: Bool {
         return datePickerIndexPath != nil
@@ -60,29 +57,7 @@ class NewTripViewController: UIViewController, UITableViewDataSource, UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.keyboardDismissMode = .onDrag
-    }
-    
-    func setupView() {
-        switch tripChangeType {
-        case .create:
-            self.navigationItem.title = "New Trip"
-        case .update:
-            self.navigationItem.title = "Edit Trip"
-            if let trip = trip {
-                dateFields[0].value = trip.startDate!
-                dateFields[1].value = trip.endDate!
-                if let destination = trip.destination {
-                    destinationName = destination.name
-                    latitude = destination.latitude
-                    longitude = destination.longitude
-                    imageData = destination.image
-                }
-            }
-            
-        }
+        setupTableView()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -97,16 +72,44 @@ class NewTripViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     @IBAction func saveButtonPressed(_ sender: UIBarButtonItem) {
-        if trip == nil {
-            create()
-        } else {
-            update()
+        if builder.destinationName == nil || builder.destinationName == "" {
+            showAlert(forAppError: .emptyDestination)
         }
-        dataController.saveViewContext()
-        dismiss(animated: true, completion: nil)
+        if builder.latitude == nil || builder.longitude == nil {
+            geocode(destination: builder.destinationName!) { (success) in
+                if !success {
+                    self.showAlert(forAppError: .geocodingFailure)
+                }
+            }
+        }
+        
+        builder.startDate = dateFields[0].value
+        builder.endDate = dateFields[1].value
+        switch tripChangeType {
+        case .create:
+            createTrip()
+        case .update:
+            updateTrip()
+        }
     }
     
     // MARK: - Methods
+    
+    private func setupView() {
+        switch tripChangeType {
+        case .create:
+            self.navigationItem.title = "New Trip"
+        case .update:
+            self.navigationItem.title = "Edit Trip"
+            configureBuilder()
+        }
+    }
+    
+    private func setupTableView() {
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.keyboardDismissMode = .onDrag
+    }
     
     private func insertDatePicker(at indexPath: IndexPath) -> IndexPath {
         if let datePickerIndexPath = datePickerIndexPath, datePickerIndexPath.row < indexPath.row {
@@ -122,39 +125,49 @@ class NewTripViewController: UIViewController, UITableViewDataSource, UITableVie
                 completionHandler(false)
                 return
             }
-            self.destinationName = destination
-            self.latitude = location.coordinate.latitude
-            self.longitude = location.coordinate.longitude
+            self.builder.latitude = location.coordinate.latitude
+            self.builder.longitude = location.coordinate.longitude
             completionHandler(true)
         }
     }
     
-    private func create() {
-        if let destinationName = destinationName, let latitude = latitude, let longitude = longitude {
-            let trip = Trip(context: dataController.viewContext)
-            trip.startDate = dateFields[0].value
-            trip.endDate = dateFields[1].value
-            let destination = Destination(context: dataController.viewContext)
-            destination.name = destinationName
-            destination.latitude = latitude
-            destination.longitude = longitude
-            destination.image = imageData
-            destination.trip = trip
+    private func createTrip() {
+        builder.build(in: dataController.viewContext) { success in
+            if success {
+                self.saveAndDismiss()
+                self.showAlert(forAppError: .tripCreationFailure)
+            } else {
+                self.showAlert(forAppError: .tripCreationFailure)
+            }
         }
     }
     
-    private func update() {
-        if let destinationName = destinationName, let latitude = latitude, let longitude = longitude {
-            if let trip = trip {
-                trip.startDate = dateFields[0].value
-                trip.endDate = dateFields[1].value
-                if let destination = trip.destination {
-                    destination.name = destinationName
-                    destination.latitude = latitude
-                    destination.longitude = longitude
-                    destination.image = imageData
+    private func updateTrip() {
+        if let trip = trip {
+            builder.update(trip) { success in
+                if success {
+                    self.saveAndDismiss()
+                    self.showAlert(forAppError: .tripUpdateFailure)
+                } else {
+                    self.showAlert(forAppError: .tripUpdateFailure)
                 }
             }
+        }
+    }
+    
+    private func saveAndDismiss() {
+        dataController.saveViewContext()
+        dismiss(animated: true, completion: nil)
+    }
+    
+    private func configureBuilder() {
+        if let trip = trip {
+            dateFields[0].value = trip.startDate!
+            dateFields[1].value = trip.endDate!
+            builder.destinationName = trip.destination?.name
+            builder.latitude = trip.destination?.latitude
+            builder.longitude = trip.destination?.longitude
+            builder.imageData = trip.destination?.image
         }
     }
     
@@ -176,7 +189,7 @@ class NewTripViewController: UIViewController, UITableViewDataSource, UITableVie
         if indexPath.section == Section.destination.rawValue {
             let textFieldTableViewCell = tableView.dequeueReusableCell(withIdentifier: "textFieldTableViewCell", for: indexPath) as! TextFieldTableViewCell
             textFieldTableViewCell.delegate = self
-            textFieldTableViewCell.configure(text: destinationName)
+            textFieldTableViewCell.configure(text: builder.destinationName)
             return textFieldTableViewCell
         }
         if indexPath.section == Section.dates.rawValue {
@@ -194,10 +207,13 @@ class NewTripViewController: UIViewController, UITableViewDataSource, UITableVie
             }
         }
         if indexPath.section == Section.photos.rawValue {
-            if destinationName != nil {
+            if builder.destinationName != nil {
                 let photosTableViewCell = tableView.dequeueReusableCell(withIdentifier: "photosTableViewCell", for: indexPath) as! PhotosTableViewCell
                 photosTableViewCell.delegate = self
-                photosTableViewCell.getPhotos(latitude: latitude!, longitude: longitude!, text: destinationName!)
+                guard let latitude = builder.latitude, let longitude = builder.longitude else {
+                    return UITableViewCell()
+                }
+                photosTableViewCell.getPhotos(latitude: latitude, longitude: longitude, text: builder.destinationName!)
                 return photosTableViewCell
             }
             let cell = UITableViewCell()
@@ -239,12 +255,17 @@ class NewTripViewController: UIViewController, UITableViewDataSource, UITableVie
     // MARK: - TextFieldTableViewCellDelegate Methods
     
     func didChange(text: String?) {
+        builder.destinationName = text
         guard let destination = text, text != "" else {
             return
         }
         geocode(destination: destination) { (success) in
             if success {
                 self.tableView.reloadSections([Section.photos.rawValue], with: .fade)
+            } else {
+                self.showAlert(forAppError: .geocodingFailure)
+                self.builder.latitude = nil
+                self.builder.longitude = nil
             }
         }
     }
@@ -252,6 +273,6 @@ class NewTripViewController: UIViewController, UITableViewDataSource, UITableVie
     // MARK: - PhotosTableViewCellDelegate Methods
     
     func didSelect(image: Data) {
-        self.imageData = image
+        builder.imageData = image
     }
 }

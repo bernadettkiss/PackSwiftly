@@ -36,6 +36,8 @@ class TripInfoViewController: UIViewController, IAxisValueFormatter {
         return formatter
     }()
     
+    // MARK: - View Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let destinationName = selectedTrip.destination?.name

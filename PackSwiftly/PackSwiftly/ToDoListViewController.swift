@@ -26,6 +26,8 @@ class ToDoListViewController: UIViewController, UITableViewDataSource, UITableVi
         return fetchedResultsController
     }()
     
+    // MARK: - View Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         textInputView.adjustToKeyboard()
