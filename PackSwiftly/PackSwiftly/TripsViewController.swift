@@ -155,7 +155,6 @@ class TripsViewController: UIViewController, UITableViewDataSource, UITableViewD
                 let image = UIImage(data: imageData)
                 cell.update(withImage: image, text: destination.name!, startDate: trip.startDate!, endDate: trip.endDate!, daysFromToday: trip.daysFromToday)
             } else {
-                cell.contentView.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
                 cell.update(withImage: nil, text: destination.name!, startDate: trip.startDate!, endDate: trip.endDate!, daysFromToday: trip.daysFromToday)
             }
         }

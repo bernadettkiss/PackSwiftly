@@ -1,5 +1,5 @@
 //
-//  ToDoListViewController.swift
+//  ListViewController.swift
 //  PackSwiftly
 //
 //  Created by Bernadett Kiss on 10/5/18.
@@ -9,17 +9,19 @@
 import UIKit
 import CoreData
 
-class ToDoListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate {
+class ListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var textField: TransparentTextField!
     @IBOutlet weak var textInputView: UIView!
     
     var selectedTrip: Trip!
+    var selectedList: String!
+    
     var dataController: DataController!
-    lazy var fetchedResultsController: NSFetchedResultsController<ToDoItem> = {
-        let fetchRequest: NSFetchRequest<ToDoItem> = ToDoItem.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "trip == %@", selectedTrip)
+    lazy var fetchedResultsController: NSFetchedResultsController<Item> = {
+        let fetchRequest: NSFetchRequest<Item> = Item.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "trip == %@ AND list == %@", argumentArray: [selectedTrip, selectedList])
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "done", ascending: true), NSSortDescriptor(key: "creationDate", ascending: true)]
         let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: dataController.viewContext, sectionNameKeyPath: "done", cacheName: nil)
         fetchedResultsController.delegate = self
@@ -34,9 +36,7 @@ class ToDoListViewController: UIViewController, UITableViewDataSource, UITableVi
         tableView.dataSource = self
         tableView.delegate = self
         textField.delegate = self
-        let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))
-        tap.cancelsTouchesInView = false
-        self.view.addGestureRecognizer(tap)
+        
         do {
             try self.fetchedResultsController.performFetch()
         } catch {
@@ -47,6 +47,14 @@ class ToDoListViewController: UIViewController, UITableViewDataSource, UITableVi
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         dataController.saveViewContext()
+    }
+    
+    // MARK: - Methods
+    
+    private func addTapGestureRecognizer() {
+        let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:)))
+        tap.cancelsTouchesInView = false
+        self.view.addGestureRecognizer(tap)
     }
     
     // MARK: - TableViewDataSource Methods
@@ -89,15 +97,12 @@ class ToDoListViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     private func addItem(title: String) {
-        let item = ToDoItem(context: dataController.viewContext)
-        item.trip = selectedTrip
-        item.title = title
-        item.done = false
+        let _ = Item(in: dataController.viewContext, title: title, trip: selectedTrip, list: selectedList)
         dataController.saveViewContext()
     }
 }
 
-extension ToDoListViewController: NSFetchedResultsControllerDelegate {
+extension ListViewController: NSFetchedResultsControllerDelegate {
     
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         tableView.beginUpdates()

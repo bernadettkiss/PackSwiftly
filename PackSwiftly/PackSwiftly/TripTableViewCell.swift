@@ -35,10 +35,10 @@ class TripTableViewCell: UITableViewCell {
     func update(withImage image: UIImage?, text: String, startDate: Date, endDate: Date, daysFromToday: Int?) {
         if let image = image {
             destinationImageView.image = image
-            destinationImageView.contentMode = .scaleAspectFill
         } else {
-            destinationImageView.image = nil
+            destinationImageView.image = UIImage(named: "airplane_view")
         }
+        destinationImageView.contentMode = .scaleAspectFill
         destinationNameLabel.text = text
         tripDatesLabel.text = "\(format(date: startDate)) - \(format(date: endDate))"
         daysLabel.text = title(for: daysFromToday)

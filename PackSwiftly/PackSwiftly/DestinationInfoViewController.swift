@@ -1,5 +1,5 @@
 //
-//  TripInfoViewController.swift
+//  DestinationInfoViewController.swift
 //  PackSwiftly
 //
 //  Created by Bernadett Kiss on 10/5/18.
@@ -9,7 +9,7 @@
 import UIKit
 import Charts
 
-class TripInfoViewController: UIViewController, IAxisValueFormatter {
+class DestinationInfoViewController: UIViewController, IAxisValueFormatter {
     
     @IBOutlet weak var unitSwitch: UISwitch!
     @IBOutlet weak var chartView: LineChartView!
@@ -59,6 +59,16 @@ class TripInfoViewController: UIViewController, IAxisValueFormatter {
         }
     }
     
+    // MARK: - Actions
+    
+    @IBAction func unitSwitchValueChanged(_ sender: UISwitch) {
+        appDelegate.unitOfTemperatureIsCelsius = sender.isOn
+        UserDefaults.standard.set(sender.isOn, forKey: "unitOfTemperatureIsCelsius")
+        getWeatherForecast()
+    }
+    
+    // MARK: - Methods
+    
     func getWeatherForecast() {
         let latitude = selectedTrip.destination?.latitude
         let longitude = selectedTrip.destination?.longitude
@@ -73,13 +83,6 @@ class TripInfoViewController: UIViewController, IAxisValueFormatter {
                 self.forecast = []
             }
         }
-    }
-    
-    
-    @IBAction func unitSwitchValueChanged(_ sender: UISwitch) {
-        appDelegate.unitOfTemperatureIsCelsius = sender.isOn
-        UserDefaults.standard.set(sender.isOn, forKey: "unitOfTemperatureIsCelsius")
-        getWeatherForecast()
     }
     
     private func setChart(dataPoints: [WeatherData]) {

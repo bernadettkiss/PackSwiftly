@@ -12,7 +12,8 @@ enum SegueIdentifier: String {
     case toNewTrip = "toNewTrip"
     case toTripDetail = "toTripDetail"
     case toToDoList = "toToDoList"
-    case toTripInfo = "toTripInfo"
+    case toPackList = "toPackList"
+    case toDestinationInfo = "toDestinationInfo"
 }
 
 enum TripSwipeActionTitle: String {
