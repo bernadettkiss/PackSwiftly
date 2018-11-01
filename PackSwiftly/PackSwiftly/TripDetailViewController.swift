@@ -49,6 +49,7 @@ class TripDetailViewController: UIViewController {
     // MARK: - Actions
     
     @IBAction func valueChanged(_ sender: UISegmentedControl) {
+        view.endEditing(true)
         switch sender.selectedSegmentIndex {
         case Segment.toDoList.rawValue:
             UIView.animate(withDuration: 0.5, animations: {

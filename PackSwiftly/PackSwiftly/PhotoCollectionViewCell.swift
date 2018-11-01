@@ -11,6 +11,18 @@ import UIKit
 class PhotoCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
+    var loading = true {
+        didSet {
+            if loading {
+                activityIndicator.startAnimating()
+                imageView.image = nil
+            } else {
+                activityIndicator.stopAnimating()
+            }
+        }
+    }
     
     override var isSelected: Bool {
         didSet {
@@ -34,6 +46,7 @@ class PhotoCollectionViewCell: UICollectionViewCell {
     }
     
     func update(with image: UIImage) {
+        loading = false
         imageView.image = image
         imageView.contentMode = .scaleAspectFill
     }

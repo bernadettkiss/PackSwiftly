@@ -36,6 +36,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         tableView.dataSource = self
         tableView.delegate = self
         textField.delegate = self
+        textInputView.isHidden = selectedTrip.archived
         
         do {
             try self.fetchedResultsController.performFetch()
@@ -72,6 +73,7 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let item = fetchedResultsController.object(at: indexPath)
         cell.textLabel?.text = item.title
         cell.accessoryType = item.done ? .checkmark : .none
+        cell.tintColor = #colorLiteral(red: 0.1764705882, green: 0.3254901961, blue: 0.6235294118, alpha: 1)
         return cell
     }
     
@@ -79,19 +81,39 @@ class ListViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let item = fetchedResultsController.object(at: indexPath)
-        item.done = !item.done
-        dataController.saveViewContext()
+        if !selectedTrip.archived {
+            let item = fetchedResultsController.object(at: indexPath)
+            item.done = !item.done
+            dataController.saveViewContext()
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        if !selectedTrip.archived {
+            let deleteAction = UIContextualAction(style: .destructive, title: TripSwipeActionTitle.delete.rawValue) { (action, view, handler) in
+                let item = self.fetchedResultsController.object(at: indexPath)
+                item.managedObjectContext?.delete(item)
+                handler(true)
+            }
+            deleteAction.backgroundColor = #colorLiteral(red: 0.9921568627, green: 0.2274509804, blue: 0.2901960784, alpha: 1)
+            
+            let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
+            configuration.performsFirstActionWithFullSwipe = false
+            return configuration
+        } else {
+            return UISwipeActionsConfiguration(actions: [])
+        }
     }
     
     // MARK: - TextFieldDelegate Methods
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        if let itemTitle = textField.text {
+        if let itemTitle = textField.text, textField.text != "" {
             addItem(title: itemTitle)
             textField.text = nil
             tableView.reloadData()
+        } else {
+            textField.resignFirstResponder()
         }
         return true
     }

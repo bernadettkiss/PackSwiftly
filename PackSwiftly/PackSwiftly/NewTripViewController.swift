@@ -31,6 +31,7 @@ class NewTripViewController: UIViewController, UITableViewDataSource, UITableVie
     
     @IBOutlet weak var tripNavigationItem: UINavigationItem!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     lazy var tripChangeType: TripChangeType = .create
     
@@ -58,6 +59,7 @@ class NewTripViewController: UIViewController, UITableViewDataSource, UITableVie
         super.viewDidLoad()
         setupView()
         setupTableView()
+        activityIndicator.stopAnimating()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -74,11 +76,12 @@ class NewTripViewController: UIViewController, UITableViewDataSource, UITableVie
     @IBAction func saveButtonPressed(_ sender: UIBarButtonItem) {
         if builder.destinationName == nil || builder.destinationName == "" {
             showAlert(forAppError: .emptyDestination)
-        }
-        if builder.latitude == nil || builder.longitude == nil {
+            return
+        } else if builder.latitude == nil || builder.longitude == nil {
             geocode(destination: builder.destinationName!) { (success) in
                 if !success {
                     self.showAlert(forAppError: .geocodingFailure)
+                    return
                 }
             }
         }
@@ -120,24 +123,26 @@ class NewTripViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     private func geocode(destination: String, completionHandler: @escaping (Bool) -> Void) {
+        activityIndicator.startAnimating()
         self.geoCoder.geocodeAddressString(destination) { (placemarks, error) in
             guard let placemarks = placemarks, let location = placemarks.first?.location else {
                 completionHandler(false)
+                self.activityIndicator.stopAnimating()
                 return
             }
             self.builder.latitude = location.coordinate.latitude
             self.builder.longitude = location.coordinate.longitude
+            self.activityIndicator.stopAnimating()
             completionHandler(true)
         }
     }
     
     private func createTrip() {
         builder.build(in: dataController.viewContext) { success in
-            if success {
-                self.saveAndDismiss()
+            if !success {
                 self.showAlert(forAppError: .tripCreationFailure)
             } else {
-                self.showAlert(forAppError: .tripCreationFailure)
+                self.saveAndDismiss()
             }
         }
     }
@@ -145,11 +150,10 @@ class NewTripViewController: UIViewController, UITableViewDataSource, UITableVie
     private func updateTrip() {
         if let trip = trip {
             builder.update(trip) { success in
-                if success {
-                    self.saveAndDismiss()
+                if !success {
                     self.showAlert(forAppError: .tripUpdateFailure)
                 } else {
-                    self.showAlert(forAppError: .tripUpdateFailure)
+                    self.saveAndDismiss()
                 }
             }
         }

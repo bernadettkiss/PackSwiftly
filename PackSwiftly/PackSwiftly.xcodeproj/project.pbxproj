@@ -113,6 +113,7 @@
 				CF9546C32134D89900943C13 /* TripsViewController.swift */,
 				CF6276602146F33600F77CAD /* NewTripViewController.swift */,
 				CFEF968821530A7900E7F637 /* TripDetailViewController.swift */,
+				CF6276622146F88200F77CAD /* TextFieldTableViewCell.swift */,
 				CFF335962167E27800F2D384 /* ListViewController.swift */,
 				CFF335982167E2C400F2D384 /* DestinationInfoViewController.swift */,
 			);
@@ -123,7 +124,6 @@
 			isa = PBXGroup;
 			children = (
 				CFC88AFB2142F42E000BE44F /* TripTableViewCell.swift */,
-				CF6276622146F88200F77CAD /* TextFieldTableViewCell.swift */,
 				CF6276642147062900F77CAD /* DateTableViewCell.swift */,
 				CF6276662147125F00F77CAD /* DatePickerTableViewCell.swift */,
 				CF8A9F8D214C318C00475EEE /* PhotosTableViewCell.swift */,

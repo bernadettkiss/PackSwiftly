@@ -61,7 +61,7 @@ class TripsViewController: UIViewController, UITableViewDataSource, UITableViewD
         tableView.isHidden = !hasTrips
     }
     
-    private func showAlert(at indexPath: IndexPath, completionHandler: @escaping (_ completion: Bool) -> Void) {
+    private func showConfirmationAlert(at indexPath: IndexPath, completionHandler: @escaping (_ completion: Bool) -> Void) {
         let alertController = UIAlertController(title: "", message: "Are you sure you want to delete this trip?", preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         alertController.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { (action) in
@@ -118,18 +118,18 @@ class TripsViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .destructive, title: TripSwipeActionTitle.delete.rawValue) { (action, view, handler) in
-            self.showAlert(at: indexPath) { completion in
+            self.showConfirmationAlert(at: indexPath) { completion in
                 handler(true)
             }
         }
-        deleteAction.backgroundColor = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
+        deleteAction.backgroundColor = #colorLiteral(red: 0.9921568627, green: 0.2274509804, blue: 0.2901960784, alpha: 1)
         
         let editAction = UIContextualAction(style: .normal, title: TripSwipeActionTitle.edit.rawValue) { (action, view, handler) in
             handler(true)
             let trip = self.fetchedResultsController.object(at: indexPath)
             self.performSegue(withIdentifier: SegueIdentifier.toNewTrip.rawValue, sender: trip)
         }
-        editAction.backgroundColor = #colorLiteral(red: 0.1411764771, green: 0.3960784376, blue: 0.5647059083, alpha: 1)
+        editAction.backgroundColor = #colorLiteral(red: 0.2196078431, green: 0.4078431373, blue: 0.7803921569, alpha: 1)
         
         var archiveActionTitle = TripSwipeActionTitle.archive.rawValue
         if indexPath.section == 1 {
@@ -141,9 +141,12 @@ class TripsViewController: UIViewController, UITableViewDataSource, UITableViewD
             let trip = self.fetchedResultsController.object(at: indexPath)
             trip.archive(trip)
         }
-        archiveAction.backgroundColor = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
+        archiveAction.backgroundColor = #colorLiteral(red: 0.8235294118, green: 0.6745098039, blue: 0.3764705882, alpha: 1)
         
-        let configuration = UISwipeActionsConfiguration(actions: [deleteAction, editAction, archiveAction])
+        var configuration = UISwipeActionsConfiguration(actions: [deleteAction, editAction, archiveAction])
+        if indexPath.section == 1 {
+            configuration = UISwipeActionsConfiguration(actions: [deleteAction, archiveAction])
+        }
         configuration.performsFirstActionWithFullSwipe = false
         return configuration
     }

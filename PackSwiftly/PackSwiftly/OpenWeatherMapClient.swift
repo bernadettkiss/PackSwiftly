@@ -137,8 +137,6 @@ class OpenWeatherMapClient {
         }
         let date = Date(timeIntervalSince1970: timeResult)
         let dateFormatter = DateFormatter()
-        //        dateFormatter.dateStyle = .medium
-        //        dateFormatter.timeStyle = .medium
         dateFormatter.dateStyle = .short
         dateFormatter.timeStyle = .none
         dateFormatter.timeZone = TimeZone.current

@@ -22,10 +22,10 @@ class TransparentTextField: UITextField {
     }
     
     private func configure() {
-        backgroundColor = #colorLiteral(red: 0.9961728454, green: 0.9902502894, blue: 1, alpha: 0.25)
-        textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.8495558647)
+        textColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
         layer.cornerRadius = 5.0
         clipsToBounds = true
-        attributedPlaceholder = NSAttributedString(string: "Type here...", attributes: [.foregroundColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)])
+        attributedPlaceholder = NSAttributedString(string: "Add item", attributes: [.foregroundColor: #colorLiteral(red: 0.3333333333, green: 0.3333333333, blue: 0.3333333333, alpha: 1)])
     }
 }
