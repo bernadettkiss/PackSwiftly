@@ -54,9 +54,10 @@ class DestinationInfoViewController: UIViewController, IAxisValueFormatter {
                     self.activityIndicator.stopAnimating()
                     self.textView.text = destinationInfo
                 }
-            case .failure:
+            case .failure(error: let error):
                 DispatchQueue.main.async {
                     self.activityIndicator.stopAnimating()
+                    self.showAlert(forAppError: error)
                     self.textView.text = "No data available"
                 }
             }

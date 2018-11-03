@@ -10,7 +10,7 @@ import Foundation
 
 enum OpenWeatherMapResult {
     case success(weatherData: [WeatherData])
-    case failure
+    case failure(error: AppError)
 }
 
 struct WeatherData {
@@ -58,41 +58,41 @@ class OpenWeatherMapClient {
         static let Description = "description"
     }
     
-    func getWeatherData(latitude: Double, longitude: Double, inCelsius: Bool, completionHandler: @escaping (OpenWeatherMapResult) -> Void) {
+    func getWeatherData(latitude: Double, longitude: Double, inCelsius: Bool, completion: @escaping (OpenWeatherMapResult) -> Void) {
         unitOfTemperatureIsCelsius = inCelsius
         let urlParameters = openWeatherMapURLParameters(latitude: latitude, longitude: longitude)
         NetworkManager.shared.request(client: .openWeatherMap, pathExtension: Constants.CurrentWeatherPathExtension, urlParameters: urlParameters) { networkResponse in
             switch networkResponse {
             case .failure(error: let error):
                 debugPrint(error)
-                completionHandler(.failure)
+                completion(.failure(error: .networkFailure))
                 return
             case .success(response: let result):
                 let parsedResult = self.process(result as! JSONObject)
                 if let parsedWeatherData = parsedResult {
-                    completionHandler(OpenWeatherMapResult.success(weatherData: parsedWeatherData))
+                    completion(.success(weatherData: parsedWeatherData))
                 } else {
-                    completionHandler(.failure)
+                    completion(.failure(error: .noData))
                 }
             }
         }
     }
     
-    func getForecast(latitude: Double, longitude: Double, inCelsius: Bool, completionHandler: @escaping (OpenWeatherMapResult) -> Void) {
+    func getForecast(latitude: Double, longitude: Double, inCelsius: Bool, completion: @escaping (OpenWeatherMapResult) -> Void) {
         unitOfTemperatureIsCelsius = inCelsius
         let urlParameters = openWeatherMapURLParameters(latitude: latitude, longitude: longitude)
         NetworkManager.shared.request(client: .openWeatherMap, pathExtension: Constants.ForecastPathExtension, urlParameters: urlParameters) { networkResponse in
             switch networkResponse {
             case .failure(error: let error):
                 debugPrint(error)
-                completionHandler(.failure)
+                completion(.failure(error: .networkFailure))
                 return
             case .success(response: let result):
                 let parsedResult = self.process(result as! JSONObject)
                 if let parsedWeatherData = parsedResult {
-                    completionHandler(OpenWeatherMapResult.success(weatherData: parsedWeatherData))
+                    completion(.success(weatherData: parsedWeatherData))
                 } else {
-                    completionHandler(.failure)
+                    completion(.failure(error: .noData))
                 }
             }
         }

@@ -10,7 +10,7 @@ import Foundation
 
 enum FlickrResult {
     case success(photos: [Photo])
-    case failure
+    case failure(error: AppError)
 }
 
 struct Photo {
@@ -22,21 +22,21 @@ class FlickrClient {
     
     static let shared = FlickrClient()
     
-    func getPhotos(latitude: Double, longitude: Double, text: String, completionHandler: @escaping (FlickrResult) -> Void) {
+    func getPhotos(latitude: Double, longitude: Double, text: String, completion: @escaping (FlickrResult) -> Void) {
         if verifyCoordinate(latitude: latitude, longitude: longitude) {
             let urlParameters = flickrURLParameters(latitude: latitude, longitude: longitude, text: text)
             NetworkManager.shared.request(client: .flickr, pathExtension: nil, urlParameters: urlParameters) { networkResponse in
                 switch networkResponse {
                 case .failure(error: let error):
                     debugPrint(error)
-                    completionHandler(.failure)
+                    completion(.failure(error: .networkFailure))
                     return
                 case .success(response: let result):
                     let parsedResult = self.process(result as! JSONObject)
                     if let parsedPhotos = parsedResult {
-                        completionHandler(FlickrResult.success(photos: parsedPhotos))
+                        completion(.success(photos: parsedPhotos))
                     } else {
-                        completionHandler(.failure)
+                        completion(.failure(error: .noData))
                     }
                 }
             }

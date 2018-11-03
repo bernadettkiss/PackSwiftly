@@ -10,7 +10,7 @@ import Foundation
 
 enum WikipediaResult {
     case success(info: String)
-    case failure
+    case failure(error: AppError)
 }
 
 class WikipediaClient {
@@ -49,20 +49,20 @@ class WikipediaClient {
         static let Extract = "extract"
     }
     
-    func getInfo(about stringToSearch: String, completionHandler: @escaping (WikipediaResult) -> Void) {
+    func getInfo(about stringToSearch: String, completion: @escaping (WikipediaResult) -> Void) {
         let urlParameters = wikipediaURLParameters(stringToSearch)
         NetworkManager.shared.request(client: .wikipedia, pathExtension: nil, urlParameters: urlParameters) { networkResponse in
             switch networkResponse {
             case .failure(error: let error):
                 debugPrint(error)
-                completionHandler(.failure)
+                completion(.failure(error: .networkFailure))
                 return
             case .success(response: let result):
                 let parsedResult = self.process(result as! JSONObject)
                 if parsedResult != nil {
-                    completionHandler(WikipediaResult.success(info: parsedResult!))
+                    completion(.success(info: parsedResult!))
                 } else {
-                    completionHandler(.failure)
+                    completion(.failure(error: .noData))
                 }
             }
         }
